@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #333;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <MFXButton layoutY="2.0" minHeight="30.0" minWidth="640.0" text="Tab1" />
-      <MFXButton layoutX="640.0" layoutY="2.0" minHeight="30.0" minWidth="640.0" text="Tab2" />
+      <MFXButton layoutY="-1.0" minHeight="30.0" minWidth="640.0" text="Tab1" />
+      <MFXButton layoutX="640.0" layoutY="-1.0" minHeight="30.0" minWidth="640.0" text="Tab2" />
    </children>
 </Pane>
