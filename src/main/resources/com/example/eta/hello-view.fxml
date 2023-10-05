@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import javafx.scene.layout.Pane?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <MFXButton layoutY="2.0" minHeight="30.0" minWidth="640.0" text="Tab1" />
-      <MFXButton layoutX="640.0" layoutY="2.0" minHeight="30.0" minWidth="640.0" text="Tab2" />
-   </children>
-</Pane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <MFXButton maxWidth="Infinity" mnemonicParsing="false" text="Button" HBox.hgrow="ALWAYS" />
+            <MFXButton maxWidth="Infinity" mnemonicParsing="false" text="Button" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <StackPane fx:id="centerStackPane" BorderPane.alignment="CENTER">
+         <!-- Placeholder panes for content1.fxml and content2.fxml -->
+         <Pane fx:id="content1Pane" prefHeight="200.0" prefWidth="200.0" />
+         <Pane fx:id="content2Pane" prefHeight="200.0" prefWidth="200.0" />
+      </StackPane>
+   </center>
+</BorderPane>
