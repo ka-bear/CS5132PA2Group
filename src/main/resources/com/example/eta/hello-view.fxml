@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eta.HelloController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eta.HelloController">
    <top>
       <HBox alignment="CENTER" prefHeight="25.6" prefWidth="200.0" style="-fx-background-color: #333;" BorderPane.alignment="CENTER">
          <children>
-            <MFXButton maxWidth="Infinity" onAction="#userbuttonclick" text="User" HBox.hgrow="ALWAYS" />
-            <MFXButton maxWidth="Infinity" onAction="#adminbuttonclick" HBox.hgrow="ALWAYS" />
+            <MFXButton fx:id="userBtn" maxWidth="Infinity" onAction="#userbuttonclick" style="-fx-background-color: #333;" text="User" HBox.hgrow="ALWAYS" />
+            <MFXButton fx:id="adminBtn" maxWidth="Infinity" onAction="#adminbuttonclick" stylesheets="@style.css" text="Admin" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </top>
    <center>
-      <StackPane fx:id="centerStackPane" BorderPane.alignment="CENTER">
+      <StackPane fx:id="centerStackPane" style="-fx-background-color: #333;" BorderPane.alignment="CENTER">
       </StackPane>
    </center>
+   <effect>
+      <DropShadow />
+   </effect>
 </BorderPane>

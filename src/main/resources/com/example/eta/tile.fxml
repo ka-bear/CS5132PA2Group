@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="tilePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#tilePaneOnClick" onMouseEntered="#mouseEnteredTile" onMouseExited="#mouseExitedTile" prefHeight="76.0" prefWidth="298.0" style="-fx-border-color: #fff; -fx-background-color: #252525;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eta.TileView">
+    <children>
+        <Label fx:id="itemName" layoutX="14.0" layoutY="13.0" text="ItemName" textFill="WHITE">
+            <font>
+                <Font name="Segoe UI Semilight" size="18.0" />
+            </font>
+        </Label>
+        <MFXButton fx:id="addToCartBtn" layoutX="219.0" layoutY="19.0" style="-fx-border-color: #fff; -fx-background-color: #333;" text="Add" textFill="WHITE">
+            <font>
+                <Font name="Segoe UI Semilight" size="18.0" />
+            </font>
+        </MFXButton>
+        <Label fx:id="charityID" layoutX="14.0" layoutY="43.0" text="Charity" textFill="#909090">
+            <font>
+                <Font name="Segoe UI Semilight" size="14.0" />
+            </font>
+        </Label>
+      <Label layoutX="116.0" layoutY="27.0" prefHeight="27.0" prefWidth="43.0" text="ETA:" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Semilight" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="time" layoutX="159.0" layoutY="27.0" prefHeight="27.0" prefWidth="60.0" text="time" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Semilight" size="18.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

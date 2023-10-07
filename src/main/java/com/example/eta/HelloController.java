@@ -1,9 +1,12 @@
 package com.example.eta;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.mfxresources.fonts.IconsProviders;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -20,9 +23,13 @@ public class HelloController {
 
     private AnchorPane adminPane;
     private AnchorPane userPane;
+    private MFXScrollPane tilePane;
 
     @FXML
-    private MFXRectangleToggleNode userButton;
+    private MFXButton userBtn;
+
+    @FXML
+    private MFXButton adminBtn;
 
 
     public void initialize() throws IOException {
@@ -30,27 +37,26 @@ public class HelloController {
         userPane = FXMLLoader.load(getClass().getResource("user-view.fxml"));
         centerStackPane.getChildren().addAll(adminPane, userPane);
         adminPane.setVisible(false);
-
-
-
+        userBtn.setDisable(true);
     }
 
     @FXML
     private void userbuttonclick() {
         adminPane.setVisible(false);
         userPane.setVisible(true);
-        System.out.println("user");
+        userBtn.setDisable(true);
+        adminBtn.setDisable(false);
+        userBtn.setStyle("-fx-background-color: #333");
+        adminBtn.setStyle("");
     }
 
     @FXML
     private void adminbuttonclick() {
         adminPane.setVisible(true);
         userPane.setVisible(false);
-        System.out.println("admin");
+        adminBtn.setDisable(true);
+        userBtn.setDisable(false);
+        adminBtn.setStyle("-fx-background-color: #333");
+        userBtn.setStyle("");
     }
-
-
-
-
-
 }
