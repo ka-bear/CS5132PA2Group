@@ -13,12 +13,28 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.9.2</junit.version>
     </properties>
-
+    <repositories>
+        <repository>
+            <id>arcgis</id>
+            <url>https://esri.jfrog.io/artifactory/arcgis</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>20</version>
+
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>12.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>22-ea+11</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -44,9 +60,26 @@
             <version>11.16.1</version>
         </dependency>
         <dependency>
-            <groupId>com.dlsc</groupId>
-            <artifactId>GMapsFX</artifactId>
-            <version>11.0.7</version>
+            <groupId>com.esri.arcgisruntime</groupId>
+            <artifactId>arcgis-java</artifactId>
+            <version>200.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.esri.arcgisruntime</groupId>
+            <artifactId>arcgis-java-jnilibs</artifactId>
+            <version>200.0.0</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>com.esri.arcgisruntime</groupId>
+            <artifactId>arcgis-java-resources</artifactId>
+            <version>200.0.0</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.32</version>
         </dependency>
     </dependencies>
 
@@ -54,11 +87,37 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>com.esri.arcgisruntime</groupId>
+                            <artifactId>arcgis-java-jnilibs</artifactId>
+                            <version>200.0.0</version>
+                            <type>zip</type>
+                            <overWrite>false</overWrite>
+                            <outputDirectory>${user.home}/.arcgis/200.0.0</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>com.esri.arcgisruntime</groupId>
+                            <artifactId>arcgis-java-resources</artifactId>
+                            <version>200.0.0</version>
+                            <type>zip</type>
+                            <overWrite>false</overWrite>
+                            <outputDirectory>${user.home}/.arcgis/200.0.0</outputDirectory>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
                     <source>20</source>
                     <target>20</target>
+
                 </configuration>
             </plugin>
             <plugin>

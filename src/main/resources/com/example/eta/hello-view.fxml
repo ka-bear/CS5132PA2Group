@@ -10,8 +10,8 @@
    <top>
       <HBox alignment="CENTER" prefHeight="25.6" prefWidth="200.0" style="-fx-background-color: #333;" BorderPane.alignment="CENTER">
          <children>
-            <MFXButton fx:id="userBtn" maxWidth="Infinity" onAction="#userbuttonclick" style="-fx-background-color: #333;" text="User" HBox.hgrow="ALWAYS" />
-            <MFXButton fx:id="adminBtn" maxWidth="Infinity" onAction="#adminbuttonclick" stylesheets="@style.css" text="Admin" HBox.hgrow="ALWAYS" />
+            <MFXButton fx:id="userBtn" maxWidth="Infinity" onAction="#userbuttonclick" rippleAnimationSpeed="2.0" style="-fx-background-color: #333;" text="User" HBox.hgrow="ALWAYS" />
+            <MFXButton fx:id="adminBtn" maxWidth="Infinity" onAction="#adminbuttonclick" rippleAnimationSpeed="2.0" stylesheets="@style.css" text="Admin" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </top>

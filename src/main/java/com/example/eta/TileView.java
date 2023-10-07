@@ -1,17 +1,20 @@
 package com.example.eta;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.application.Platform;
 
 import java.io.IOException;
+import java.util.Objects;
+
+import com.example.eta.UserView;
 
 public class TileView {
 
     @FXML
     AnchorPane tilePane;
-    boolean selectec = false;
 
 //    @FXML
 //    private void addToCartOnClick(ActionEvent event) {
@@ -42,12 +45,12 @@ public class TileView {
 
     @FXML
     private void mouseEnteredTile(MouseEvent event) {
-        tilePane.setStyle("-fx-background-color: #0c6fa2; -fx-border-color: #eee");
+        if (!Objects.equals(tilePane.getStyle(), "-fx-background-color: #32a852; -fx-border-color: #eee")) tilePane.setStyle("-fx-background-color: #0c6fa2; -fx-border-color: #eee");
     }
 
     @FXML
     private void mouseExitedTile(MouseEvent event) {
-         tilePane.setStyle("-fx-background-color: #252525; -fx-border-color: #eee");
+        if (!Objects.equals(tilePane.getStyle(), "-fx-background-color: #32a852; -fx-border-color: #eee")) tilePane.setStyle("-fx-background-color: #252525; -fx-border-color: #eee");
     }
 
     @FXML
@@ -69,7 +72,10 @@ public class TileView {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        tilePane.setStyle("-fx-background-color: #138CD8; -fx-border-color: #eee");
+                        for (Node tile : tilePane.getParent().getChildrenUnmodifiable()) {
+                            tile.setStyle("-fx-background-color: #252525; -fx-border-color: #eee");
+                        }
+                        tilePane.setStyle("-fx-background-color: #32a852; -fx-border-color: #eee");
                     }
                 });
             }
