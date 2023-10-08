@@ -34,13 +34,13 @@ public class TravelTimeEstimator {
 
     public static void main(String[] args) {
         try {
-            System.out.println(getTravelTime());
+            System.out.println(getTravelTime(null));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public RouteResult getTravelTime(ObservableList<Stop> routeStops) throws Exception {
+    public List<Route> getTravelTime(ObservableList<Stop> routeStops) throws Exception {
             RouteResult result;
             routeParameters.setStops(routeStops);
             ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
@@ -52,6 +52,10 @@ public class TravelTimeEstimator {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-    }
+
+            
+            });
+
+                return result.getRoutes();
 }
 
