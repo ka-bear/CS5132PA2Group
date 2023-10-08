@@ -46,7 +46,11 @@ public class PriorityQueue<T, S extends Comparable<S>> {
     private void shiftDown() {
         Pair<T, S> temp;
         int node = 0, left = 1, right = 2, next;
-        if (left >= count) {
+        if (tree[left] == null && tree[right] == null)
+            next = count;
+        else if (tree[right] == null)
+            next = left;
+        else if (left >= count) {
             return;
         }
         if (right >= count || tree[left].compareTo(tree[right]) >= 0) {
