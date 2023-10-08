@@ -38,6 +38,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import com.esri.arcgisruntime.geometry.Geometry;
@@ -137,35 +142,35 @@ public class UserView {
 //                    e.printStackTrace();
 //                }
 //            });
-//            routeStops.addListener((ListChangeListener<Stop>) e -> {
-//                // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
-//                int routeStopsSize = routeStops.size();
-//                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.BLUE, 20);
-//                Geometry routeStopGeometry = routeStops.get(routeStopsSize-1).getGeometry();
-//
-//                graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
-//
-//            });
-//            routeStops.add(new Stop(new Point(x1,y1,SpatialReference.create(102100))));
-//            routeStops.add(new Stop(new Point(x2,y2,SpatialReference.create(102100))));
-//            routeParameters.setStops(routeStops);
-//            ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
-//            routeResultFuture.addDoneListener(() -> {
-//                try {
-//                    RouteResult result = routeResultFuture.get();
-//                    List<Route> routes = result.getRoutes();
-//                    if (!routes.isEmpty()) {
-//                        Route route = routes.get(0);
-//                        Geometry shape = route.getRouteGeometry();
-//                        routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
-//                        graphicsOverlay.getGraphics().add(routeGraphic);
-//
-//                    }
-//
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//            });
+            routeStops.addListener((ListChangeListener<Stop>) e -> {
+                // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
+                int routeStopsSize = routeStops.size();
+                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.BLUE, 20);
+                Geometry routeStopGeometry = routeStops.get(routeStopsSize-1).getGeometry();
+
+                graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
+
+            });
+            routeStops.add(new Stop(new Point(x1,y1,SpatialReference.create(102100))));
+            routeStops.add(new Stop(new Point(x2,y2,SpatialReference.create(102100))));
+            routeParameters.setStops(routeStops);
+            ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
+            routeResultFuture.addDoneListener(() -> {
+                try {
+                    RouteResult result = routeResultFuture.get();
+                    List<Route> routes = result.getRoutes();
+                    if (!routes.isEmpty()) {
+                        Route route = routes.get(0);
+                        Geometry shape = route.getRouteGeometry();
+                        routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
+                        graphicsOverlay.getGraphics().add(routeGraphic);
+
+                    }
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
 
 
         } else {
@@ -265,7 +270,17 @@ public class UserView {
                         Geometry shape = route.getRouteGeometry();
                         routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
                         graphicsOverlay.getGraphics().add(routeGraphic);
-                        System.out.println(route.getTravelTime());
+                        Double t = route.getTravelTime();
+                        Point p1 = routeStops.get(0).getGeometry();
+                        Point p2 = routeStops.get(1).getGeometry();
+                        Double x1 = p1.getX(), y1 = p1.getY();
+                        Double x2 = p2.getX(), y2 = p2.getY();
+                        System.out.println(routeStops.get(1).getGeometry());
+
+                        Path file = Paths.get("dailyPath.txt");
+                        List<String> lines = List.of(x1 + " " + y1 + " " + x2 + " " + y2 + " " + t);
+                        Files.write(file, lines, StandardCharsets.UTF_8);
+
                     }
 
                 } catch (Exception ex) {
