@@ -265,7 +265,7 @@ public class UserView {
                         Geometry shape = route.getRouteGeometry();
                         routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
                         graphicsOverlay.getGraphics().add(routeGraphic);
-
+                        System.out.println(route.getTravelTime());
                     }
 
                 } catch (Exception ex) {
