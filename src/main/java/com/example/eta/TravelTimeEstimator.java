@@ -56,7 +56,7 @@ public class TravelTimeEstimator {
             }
             in.close();
             JSONObject jsonResponse = new JSONObject(response.toString());
-            totalSeconds += jsonResponse.getJSONObject("features").getJSONObject(0).getJSONObject("properties").getDouble("duration");
+            totalSeconds += jsonResponse.getJSONObject("features").getJSONObject("0").getJSONObject("properties").getDouble("duration");
         }
 
         return totalSeconds / 60; 

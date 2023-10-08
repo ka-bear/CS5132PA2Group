@@ -1,18 +1,25 @@
 package com.example.eta;
 
 import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
+import com.esri.arcgisruntime.concurrent.ListenableFuture;
+import com.esri.arcgisruntime.geometry.Envelope;
+import com.esri.arcgisruntime.geometry.SpatialReference;
 import com.esri.arcgisruntime.layers.OpenStreetMapLayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.mapping.Basemap;
 import com.esri.arcgisruntime.mapping.Viewpoint;
+import com.esri.arcgisruntime.mapping.view.Graphic;
+import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.MapView;
+import com.esri.arcgisruntime.tasks.networkanalysis.RouteParameters;
+import com.esri.arcgisruntime.tasks.networkanalysis.RouteTask;
+import com.esri.arcgisruntime.tasks.networkanalysis.Stop;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
-import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,6 +47,10 @@ public class UserView {
     private GridPane gridPane;
 
     MapView mapView;
+    private Graphic routeGraphic;
+    private RouteTask routeTask;
+    private RouteParameters routeParameters;
+    public static ObservableList<Stop> routeStops = FXCollections.observableArrayList();
 
     public void initialize() throws IOException {
         ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU\n");
@@ -61,7 +72,22 @@ public class UserView {
         mapView.setMap(map);
 
         // set a viewpoint on the map view
-        mapView.setViewpoint(new Viewpoint(34.056295, -117.195800, 577790));
+        mapView.setViewpointGeometryAsync(new Envelope(11531238.957102917, 133131.3018712258, 11580870.529434115, 166663.23881347742, SpatialReference.create(102100)));
+
+        GraphicsOverlay graphicsOverlay = new GraphicsOverlay();
+        mapView.getGraphicsOverlays().add(graphicsOverlay);
+        routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+        ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
+        routeParametersFuture.addDoneListener(() -> {
+            try {
+                routeParameters = routeParametersFuture.get();
+
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                alert.show();
+                e.printStackTrace();
+            }
+        });
 
         // add the map view to stack pane
         mapPane.getChildren().add(mapView);
@@ -70,6 +96,8 @@ public class UserView {
         if (f.exists()) {
             multiBtn.setText("Edit Route");
             btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
+        } else {
+            
         }
         setProducts();
     }
