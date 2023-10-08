@@ -38,6 +38,11 @@ public class HelloController {
         centerStackPane.getChildren().addAll(adminPane, userPane);
         adminPane.setVisible(false);
         userBtn.setDisable(true);
+        userBtn.setStyle(
+                "    -fx-text-fill: #fff;\n" +
+                        "    -fx-background-color: #333;\n" +
+                        "    -fx-opacity: 1.0;"
+        );
     }
 
     @FXML
@@ -46,7 +51,12 @@ public class HelloController {
         userPane.setVisible(true);
         userBtn.setDisable(true);
         adminBtn.setDisable(false);
-        userBtn.setStyle("-fx-background-color: #333");
+        //userBtn.setStyle("-fx-background-color: #333");
+        userBtn.setStyle(
+                "    -fx-text-fill: #fff;\n" +
+                "    -fx-background-color: #333;\n" +
+                "    -fx-opacity: 1.0;"
+        );
         adminBtn.setStyle("");
     }
 
@@ -56,7 +66,12 @@ public class HelloController {
         userPane.setVisible(false);
         adminBtn.setDisable(true);
         userBtn.setDisable(false);
-        adminBtn.setStyle("-fx-background-color: #333");
+        //adminBtn.setStyle("-fx-background-color: #333");
+        adminBtn.setStyle(
+                "    -fx-text-fill: #fff;\n" +
+                        "    -fx-background-color: #333;\n" +
+                        "    -fx-opacity: 1.0;"
+        );
         userBtn.setStyle("");
     }
 }

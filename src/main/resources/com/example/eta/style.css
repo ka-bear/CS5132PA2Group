@@ -12,11 +12,7 @@
     -fx-background-color: #292929;
 }
 
-.button:disabled {
-    -fx-text-fill: #fff;
-    -fx-background-color: #292929;
-    -fx-opacity: 1.0;
-}
+
 
 .text-field {
     -fx-background-color: #292929;

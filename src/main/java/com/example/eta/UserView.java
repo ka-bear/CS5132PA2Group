@@ -4,6 +4,7 @@ import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.geometry.Point;
+import com.esri.arcgisruntime.geometry.Geometry;
 import com.esri.arcgisruntime.geometry.SpatialReference;
 import com.esri.arcgisruntime.layers.OpenStreetMapLayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
@@ -15,6 +16,10 @@ import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import com.esri.arcgisruntime.tasks.networkanalysis.*;
+import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
+import com.esri.arcgisruntime.tasks.networkanalysis.RouteParameters;
+import com.esri.arcgisruntime.tasks.networkanalysis.RouteTask;
+import com.esri.arcgisruntime.tasks.networkanalysis.Stop;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -24,8 +29,10 @@ import javafx.scene.paint.Color;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -34,6 +41,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import com.esri.arcgisruntime.geometry.Geometry;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
 
 public class UserView {
 
@@ -57,9 +67,11 @@ public class UserView {
     private RouteTask routeTask;
     private RouteParameters routeParameters;
     public static ObservableList<Stop> routeStops = FXCollections.observableArrayList();
+    private final ListView<String> directionsList = new ListView<>();
 
+    private GraphicsOverlay graphicsOverlay;
     public void initialize() throws IOException {
-        ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU\n");
+        ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU");
         var openStreetMapLayer = new OpenStreetMapLayer();
 
         // if the layer failed to load, display an alert
@@ -80,12 +92,31 @@ public class UserView {
         // set a viewpoint on the map view
         mapView.setViewpointGeometryAsync(new Envelope(11531238.957102917, 133131.3018712258, 11580870.529434115, 166663.23881347742, SpatialReference.create(102100)));
 
-        GraphicsOverlay graphicsOverlay = new GraphicsOverlay();
+        directionsList.setMaxSize(400, 250);
+        mapPane.getChildren().add(directionsList);
+        StackPane.setAlignment(directionsList, Pos.TOP_LEFT);
+
+        graphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(graphicsOverlay);
 
         File f = new File("dailyPath.txt");
+
+        routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+        ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
+        routeParametersFuture.addDoneListener(() -> {
+            try {
+                routeParameters = routeParametersFuture.get();
+                routeParameters.setReturnDirections(true);
+                directionsList.getItems().add("Click to add two points to the map to find a route.");
+
+            } catch (Exception e2) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e2.toString());
+                alert.show();
+                e2.printStackTrace();
+            }
+        });
         if (f.exists()) {
-            multiBtn.setText("Edit Route");
+            multiBtn.setText("    Edit Route");
             btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
             Scanner scan = new Scanner(f);
             Scanner scanline = new Scanner(scan.nextLine());
@@ -94,46 +125,54 @@ public class UserView {
             int x2 = scanline.nextInt();
             int y2 = scanline.nextInt();
 
-            routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
-            ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
-            routeParametersFuture.addDoneListener(() -> {
-                try {
-                    routeParameters = routeParametersFuture.get();
+//            routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+//            ListenableFuture<RouteParameters> routeParametersFuture2 = routeTask.createDefaultParametersAsync();
+//            routeParametersFuture.addDoneListener(() -> {
+//                try {
+//                    routeParameters = routeParametersFuture.get();
+//
+//                } catch (Exception e) {
+//                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+//                    alert.show();
+//                    e.printStackTrace();
+//                }
+//            });
+//            routeStops.addListener((ListChangeListener<Stop>) e -> {
+//                // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
+//                int routeStopsSize = routeStops.size();
+//                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.BLUE, 20);
+//                Geometry routeStopGeometry = routeStops.get(routeStopsSize-1).getGeometry();
+//
+//                graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
+//
+//            });
+//            routeStops.add(new Stop(new Point(x1,y1,SpatialReference.create(102100))));
+//            routeStops.add(new Stop(new Point(x2,y2,SpatialReference.create(102100))));
+//            routeParameters.setStops(routeStops);
+//            ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
+//            routeResultFuture.addDoneListener(() -> {
+//                try {
+//                    RouteResult result = routeResultFuture.get();
+//                    List<Route> routes = result.getRoutes();
+//                    if (!routes.isEmpty()) {
+//                        Route route = routes.get(0);
+//                        Geometry shape = route.getRouteGeometry();
+//                        routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
+//                        graphicsOverlay.getGraphics().add(routeGraphic);
+//
+//                    }
+//
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//            });
 
-                } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-                    alert.show();
-                    e.printStackTrace();
-                }
-            });
-            routeStops.addListener((ListChangeListener<Stop>) e -> {
-                // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
-                int routeStopsSize = routeStops.size();
-                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.BLUE, 20);
-                Geometry routeStopGeometry = routeStops.get(routeStopsSize-1).getGeometry();
 
-                graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
+        } else {
+            // first time using app, need to add route
 
-            });
-            routeStops.add(new Stop(new Point(x1,y1,SpatialReference.create(102100))));
-            routeStops.add(new Stop(new Point(x2,y2,SpatialReference.create(102100))));
-            routeParameters.setStops(routeStops);
-            ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
-            routeResultFuture.addDoneListener(() -> {
-                try {
-                    RouteResult result = routeResultFuture.get();
-                    List<Route> routes = result.getRoutes();
-                    if (!routes.isEmpty()) {
-                        Route route = routes.get(0);
-                        Geometry shape = route.getRouteGeometry();
-                        routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
-                        graphicsOverlay.getGraphics().add(routeGraphic);
+            multiBtn.setOnMouseClicked(e -> {
 
-                    }
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
             });
 
 
@@ -142,6 +181,8 @@ public class UserView {
         mapPane.getChildren().add(mapView);
 
         setProducts();
+
+
     }
 
     private void setProducts() {
@@ -160,5 +201,81 @@ public class UserView {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void addStopsOnMouseClicked() {
+        mapView.setOnMouseClicked(event -> {
+            if (event.isStillSincePress() && event.getButton() == MouseButton.PRIMARY) {
+                Point2D mapPoint = new Point2D(event.getX(), event.getY());
+                routeStops.add(new Stop(mapView.screenToLocation(mapPoint)));
+            }
+        });
+    }
+
+    @FXML
+    private void multiAction() {
+        if (multiBtn.getText().equals("    Insert Route")) {
+            multiBtn.setText("    Submit Route");
+            multiBtn.setDisable(true);
+            addStopsOnMouseClicked();
+
+            routeStops.addListener((ListChangeListener<Stop>) e -> {
+                // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
+                int routeStopsSize = routeStops.size();
+                // handle user interaction
+                System.out.println(routeStops);
+                Color markerColor = Color.BLUE;
+                if (routeStopsSize == 0) {
+                    System.out.println("zero");
+                    return;
+                } else if (routeStopsSize == 1) {
+                    System.out.println("one");
+                    graphicsOverlay.getGraphics().clear();
+                    markerColor = Color.GREEN;
+                    //if (!directionsList.getItems().isEmpty())
+                    //    directionsList.getItems().clear();
+                    //directionsList.getItems().add("Click to add two points to the map to find a route.");
+                } else if (routeStopsSize == 2) markerColor = Color.RED;
+                // create a blue circle symbol for the stop
+                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, markerColor, 20);
+                // get the stop's geometry
+                Geometry routeStopGeometry = routeStops.get(routeStopsSize-1).getGeometry();
+
+                graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
+
+                if (routeStopsSize == 2) {
+                    // find the ROUTE
+                    System.out.println("two");
+                    // remove the mouse clicked event if two stops have been added
+                    mapView.setOnMouseClicked(null);
+                    multiBtn.setDisable(false);
+
+                }
+            });
+        }
+        else if (multiBtn.getText().equals("    Submit Route")) {
+            routeParameters.setStops(routeStops);
+            ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
+            routeResultFuture.addDoneListener(() -> {
+                try {
+                    RouteResult result = routeResultFuture.get();
+                    List<Route> routes = result.getRoutes();
+                    if (!routes.isEmpty()) {
+                        Route route = routes.get(0);
+                        Geometry shape = route.getRouteGeometry();
+                        routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
+                        graphicsOverlay.getGraphics().add(routeGraphic);
+
+                    }
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+        }
+        else if (multiBtn.getText().equals("    Edit Route")) {
+
+        }
+
     }
 }

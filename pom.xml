@@ -59,21 +59,21 @@
             <artifactId>materialfx</artifactId>
             <version>11.16.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.esri.arcgisruntime</groupId>
+        <dependency>            <groupId>com.esri.arcgisruntime</groupId>
+
             <artifactId>arcgis-java</artifactId>
-            <version>200.0.0</version>
+            <version>200.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.esri.arcgisruntime</groupId>
             <artifactId>arcgis-java-jnilibs</artifactId>
-            <version>200.0.0</version>
+            <version>200.2.0</version>
             <type>zip</type>
         </dependency>
         <dependency>
             <groupId>com.esri.arcgisruntime</groupId>
             <artifactId>arcgis-java-resources</artifactId>
-            <version>200.0.0</version>
+            <version>200.2.0</version>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -99,18 +99,18 @@
                         <artifactItem>
                             <groupId>com.esri.arcgisruntime</groupId>
                             <artifactId>arcgis-java-jnilibs</artifactId>
-                            <version>200.0.0</version>
+                            <version>200.2.0</version>
                             <type>zip</type>
                             <overWrite>false</overWrite>
-                            <outputDirectory>${user.home}/.arcgis/200.0.0</outputDirectory>
+                            <outputDirectory>${user.home}/.arcgis/200.2.0</outputDirectory>
                         </artifactItem>
                         <artifactItem>
                             <groupId>com.esri.arcgisruntime</groupId>
                             <artifactId>arcgis-java-resources</artifactId>
-                            <version>200.0.0</version>
+                            <version>200.2.0</version>
                             <type>zip</type>
                             <overWrite>false</overWrite>
-                            <outputDirectory>${user.home}/.arcgis/200.0.0</outputDirectory>
+                            <outputDirectory>${user.home}/.arcgis/200.2.0</outputDirectory>
                         </artifactItem>
                     </artifactItems>
                 </configuration>
