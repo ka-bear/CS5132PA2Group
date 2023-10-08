@@ -24,11 +24,7 @@ import javafx.scene.paint.Color;
 
 public class TravelTimeEstimator {
 
-    private RouteParameters routeParameters;
-    private RouteTask routeTask;
-    routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
-    ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
-
+    
 
 
 
@@ -40,8 +36,14 @@ public class TravelTimeEstimator {
         }
     }
 
-    public List<Route> getTravelTime(ObservableList<Stop> routeStops) throws Exception {
+    public static double getTravelTime(ObservableList<Stop> routeStops) throws Exception {
             RouteResult result;
+            RouteParameters routeParameters;
+            RouteTask routeTask;
+            routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+            ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
+
+
             routeParameters.setStops(routeStops);
             ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
             routeResultFuture.addDoneListener(() -> {
@@ -56,6 +58,6 @@ public class TravelTimeEstimator {
             
             });
 
-                return result.getRoutes();
+                return result.getRoutes().get(0).getTravelTime();
 }
 
