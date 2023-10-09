@@ -1,8 +1,8 @@
 package com.example.eta;
 
 public class PriorityQueue<T, S extends Comparable<S>> {
-    private Pair<T, S>[] tree;
-    private int count;
+    public Pair<T, S>[] tree;
+    public int count;
 
     @SuppressWarnings("unchecked")
     public PriorityQueue(int initialCapacity) {
