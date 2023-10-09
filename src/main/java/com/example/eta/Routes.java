@@ -8,11 +8,7 @@ public class Routes {
     private String charity;
     private double[] toLocation;
     private double[] fromLocation;
-    private Point toRoute;
-    private Point fromRoute;
 
-    public Point getToRoute() { return toRoute; }
-    public Point getFromRoute() { return fromRoute; }
     public String getItem() {
         return item;
     }
@@ -29,7 +25,7 @@ public class Routes {
         return fromLocation;
     }
 
-    public Routes(String item, String charity, double[] toLocation, double[] fromLocation, Point toRoute, Point fromRoute) {
+    public Routes(String item, String charity, double[] toLocation, double[] fromLocation) {
         this.item = item;
         this.charity = charity;
         if (toLocation.length == 2) {
@@ -38,8 +34,6 @@ public class Routes {
         if (fromLocation.length == 2) {
             this.fromLocation = fromLocation;
         }
-        this.toRoute = toRoute;
-        this.fromRoute = fromRoute;
     }
 
 }

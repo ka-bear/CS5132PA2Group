@@ -60,7 +60,7 @@ public class DialogController {
     @FXML
     private void submitAction() throws Exception {
         ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU");
-        Routes newRoute = new Routes(itemTF.getText(), charityTF.getText(), new double[]{AdminView.routeStopsStatic.get(1).getGeometry().getX(), AdminView.routeStopsStatic.get(1).getGeometry().getY()}, new double[]{AdminView.routeStopsStatic.get(0).getGeometry().getX(), AdminView.routeStopsStatic.get(0).getGeometry().getY()}, UserView.start, UserView.end);
+        Routes newRoute = new Routes(itemTF.getText(), charityTF.getText(), new double[]{AdminView.routeStopsStatic.get(1).getGeometry().getX(), AdminView.routeStopsStatic.get(1).getGeometry().getY()}, new double[]{AdminView.routeStopsStatic.get(0).getGeometry().getX(), AdminView.routeStopsStatic.get(0).getGeometry().getY()});
 
 
         RouteTask routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
@@ -74,14 +74,14 @@ public class DialogController {
                 //double y1 =148435.8325889503;
                 //double x2 = 1.1553475735468395E7;
                 //double y2 = 142532.77029089793;
-                double x1 = newRoute.getFromRoute().getX();
-                double y1 = newRoute.getFromRoute().getY();
+                double x1 = UserView.start.getX();
+                double y1 = UserView.start.getY();
                 double x2 = newRoute.getFromLocation()[0];
                 double y2 = newRoute.getFromLocation()[1];
                 double x3 = newRoute.getToLocation()[0];
                 double y3 = newRoute.getToLocation()[1];
-                double x4 = newRoute.getToRoute().getY();
-                double y4 = newRoute.getToRoute().getY();
+                double x4 = UserView.end.getX();
+                double y4 = UserView.end.getY();
                 Point start = new Point(x1,y1,SpatialReference.create(102100));
                 Point end = new Point(x2,y2,SpatialReference.create(102100));
                 Point three = new Point(x3,y3,SpatialReference.create(102100));
@@ -105,9 +105,15 @@ public class DialogController {
                         if (!routes.isEmpty()) {
                             Route route = routes.get(0);
                             Geometry shape = route.getRouteGeometry();
-                            System.out.println(route.getTravelTime());
+                            double t = route.getTravelTime();
                             //routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
                             //graphicsOverlay.getGraphics().add(routeGraphic);
+
+                            Writer output = new BufferedWriter(new FileWriter("routes.csv", true));
+                            output.append(newRoute.getItem() + "," + newRoute.getCharity() + "," + x2 + "," + y2 + "," + x3 + "," + y3 + "," + t + "\n");
+                            output.close();
+
+                            HelloApplication.priorityStatic.enqueue(newRoute, t);
 
                             Stage stage = (Stage) cancelBtn.getScene().getWindow();
                             AdminView.graphicsOverlayStatic.getGraphics().clear();
