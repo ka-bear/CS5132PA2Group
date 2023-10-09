@@ -24,7 +24,9 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import javafx.fxml.FXMLLoader;
@@ -109,6 +111,8 @@ public class UserView {
         if (f.exists()) {
             multiBtn.setText("    Edit Route");
             btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
+
+            multiBtn.setDisable(true); // Since we haven't implemented this yet
         }
 
         routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
@@ -264,8 +268,10 @@ public class UserView {
             });
         }
         else if (multiBtn.getText().equals("    Edit Route")) {
-
+            // TODO
         }
 
     }
+
+
 }
