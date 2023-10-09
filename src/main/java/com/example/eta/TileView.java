@@ -1,7 +1,9 @@
 package com.example.eta;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.application.Platform;
@@ -16,32 +18,32 @@ public class TileView {
     @FXML
     AnchorPane tilePane;
 
-//    @FXML
-//    private void addToCartOnClick(ActionEvent event) {
-//        try {
-//            MainController.shoppingCart.add(product);
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setHeaderText("Success");
-//            alert.setTitle("Success");
-//            alert.setContentText("Product Added To Cart");
-//            alert.show();
-//        } catch (ArrayStoreException e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText("Cart Is Full");
-//            alert.setTitle("Cart Is Full");
-//            alert.setContentText("Cannot Add More To Cart");
-//            alert.show();
-//        }
-//    }
+    @FXML
+    MFXButton addBtn;
 
-//    public void setTile(Product product, int quantity) {
-//        this.product = product;
-//        itemName.setText(product.getName());
-//        itemPrice.setText(String.format("$%.2f", product.getPrice()));
-//        itemQuantity.setText(quantity + "");
-//        productID.setText(product.getProductID());
-//        itemImage.setImage(new Image("file:" + product.getImages().get(0)));
-//    }
+    @FXML
+    Label timeLabel;
+
+    @FXML
+    Label charityID;
+
+    @FXML
+    Label itemName;
+
+    @FXML
+    private void addAction() {
+        HelloApplication.priorityStatic.dequeue();
+    }
+
+    public void setTile(Routes routes, double time, boolean add) {
+        if (add) {
+            addBtn.setVisible(false);
+            addBtn.setDisable(true);
+        }
+        itemName.setText(routes.getItem());
+        charityID.setText(routes.getCharity());
+        timeLabel.setText(String.valueOf(time));
+    }
 
     @FXML
     private void mouseEnteredTile(MouseEvent event) {

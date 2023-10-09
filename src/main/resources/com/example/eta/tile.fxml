@@ -12,7 +12,7 @@
                 <Font name="Segoe UI Semilight" size="18.0" />
             </font>
         </Label>
-        <MFXButton fx:id="addToCartBtn" layoutX="219.0" layoutY="19.0" style="-fx-border-color: #fff; -fx-background-color: #333;" text="Add" textFill="WHITE">
+        <MFXButton fx:id="addBtn" layoutX="219.0" layoutY="19.0" onAction="#addAction" style="-fx-border-color: #fff; -fx-background-color: #333;" text="Add" textFill="WHITE">
             <font>
                 <Font name="Segoe UI Semilight" size="18.0" />
             </font>
@@ -27,7 +27,7 @@
             <Font name="Segoe UI Semilight" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="time" layoutX="159.0" layoutY="27.0" prefHeight="27.0" prefWidth="60.0" text="time" textFill="WHITE">
+      <Label fx:id="timeLabel" layoutX="159.0" layoutY="27.0" prefHeight="27.0" prefWidth="60.0" text="time" textFill="WHITE">
          <font>
             <Font name="Segoe UI Semilight" size="18.0" />
          </font>

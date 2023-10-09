@@ -38,9 +38,9 @@ public class DialogController {
         TravelTimeEstimator eta = new TravelTimeEstimator();
         double time = eta.getTravelTime(AdminView.routeStopsStatic);
         HelloApplication.priorityStatic.enqueue(newRoute, time);
-        Writer output = new BufferedWriter(new FileWriter("routes.csv", true));
-        output.append("\n" + newRoute.getItem() + "," + newRoute.getCharity() + "," + String.valueOf(newRoute.getToLocation()[0]) + "," + String.valueOf(newRoute.getToLocation()[1]) + "," + String.valueOf(newRoute.getFromLocation()[0]) + "," + String.valueOf(newRoute.getFromLocation()[1]) + "," + String.valueOf(time));
-        output.close();
+//        Writer output = new BufferedWriter(new FileWriter("routes.csv", true));
+//        output.append(newRoute.getItem() + "," + newRoute.getCharity() + "," + String.valueOf(newRoute.getToLocation()[0]) + "," + String.valueOf(newRoute.getToLocation()[1]) + "," + String.valueOf(newRoute.getFromLocation()[0]) + "," + String.valueOf(newRoute.getFromLocation()[1]) + "," + String.valueOf(time) + "\n");
+//        output.close();
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         AdminView.graphicsOverlayStatic.getGraphics().clear();
         AdminView.routeStopsStatic.clear();

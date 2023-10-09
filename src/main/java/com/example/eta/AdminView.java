@@ -164,7 +164,7 @@ public class AdminView {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(mapView.getScene().getWindow());
             stage.show();
-
+            addBtn.setText("    Add Dropoff");
         }
     }
 

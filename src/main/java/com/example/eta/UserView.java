@@ -99,10 +99,6 @@ public class UserView {
         // set a viewpoint on the map view
         mapView.setViewpointGeometryAsync(new Envelope(11531238.957102917, 133131.3018712258, 11580870.529434115, 166663.23881347742, SpatialReference.create(102100)));
 
-        directionsList.setMaxSize(400, 250);
-        mapPane.getChildren().add(directionsList);
-        StackPane.setAlignment(directionsList, Pos.TOP_LEFT);
-
         graphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(graphicsOverlay);
 
