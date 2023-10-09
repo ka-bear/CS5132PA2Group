@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import java.io.File;
 import java.io.IOException;
 import io.github.palexdev.materialfx.controls.MFXRectangleToggleNode;
 import javafx.scene.paint.Color;
@@ -31,6 +32,8 @@ public class HelloController {
     @FXML
     private MFXButton adminBtn;
 
+    public final static String csvName = "routes.csv";
+
     public void initialize() throws IOException {
         adminPane = FXMLLoader.load(getClass().getResource("admin-view.fxml"));
         userPane = FXMLLoader.load(getClass().getResource("user-view.fxml"));
@@ -42,6 +45,11 @@ public class HelloController {
                         "    -fx-background-color: #333;\n" +
                         "    -fx-opacity: 1.0;"
         );
+
+        File f = new File(csvName);
+        if (!f.exists()) {
+            f.createNewFile();
+        }
     }
 
     @FXML
