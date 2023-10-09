@@ -68,7 +68,6 @@ public class UserView {
 
     @FXML
     private GridPane gridPane;
-
     MapView mapView;
     private Graphic routeGraphic;
     private RouteTask routeTask;
@@ -105,19 +104,16 @@ public class UserView {
 
         File f = new File("dailyPath.txt");
 
-        if (f.exists()) {
-            multiBtn.setText("    Edit Route");
-            btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
-        }
-
         routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
         ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
         routeParametersFuture.addDoneListener(() -> {
             try {
                 routeParameters = routeParametersFuture.get();
                 if (f.exists()) {
-                    multiBtn.setText("    Edit Route");
-                    btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
+                    multiBtn.setVisible(false);
+                    btnImage.setVisible(false);
+                    multiBtn.setDisable(true);
+                    setProducts();
                     Scanner scan = new Scanner(f);
                     Scanner scanline = new Scanner(scan.nextLine());
                     double x1 = scanline.nextDouble();
@@ -165,23 +161,29 @@ public class UserView {
 
 
         mapPane.getChildren().add(mapView);
-
-        setProducts();
-
-
     }
 
-    private void setProducts() {
+    public void setProducts() {
+        gridPane.getChildren().clear();
         int row = 0;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < HelloApplication.priorityStatic.count; i++) {
             try{
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(HelloApplication.class.getResource("tile.fxml"));
 
                 AnchorPane anchorPane = fxmlLoader.load();
                 TileView tileController = fxmlLoader.getController();
-//                ProductCategory productCategory = inventory.getProductCode(((String)inventory.getInventoryList().get(i).get(0)).substring(0,2));
-//                tileController.setTile(productCategory.getProduct(((String)inventory.getInventoryList().get(i).get(0))) ,(int) inventory.getInventoryList().get(i).get(1));
+                tileController.addBtn.setOnAction(e -> {
+                    HelloApplication.priorityStatic.dequeue();
+                    System.out.println(Arrays.toString(HelloApplication.priorityStatic.tree));
+                    setProducts();
+                });
+                if (i == 0) {
+                    tileController.setTile(HelloApplication.priorityStatic.tree[0].item, HelloApplication.priorityStatic.tree[0].priority, true);
+                } else {
+                    tileController.setTile(HelloApplication.priorityStatic.tree[0].item, HelloApplication.priorityStatic.tree[0].priority, false);
+                }
+
                 gridPane.add(anchorPane, 0, row++);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -200,7 +202,7 @@ public class UserView {
 
     @FXML
     private void multiAction() {
-        if (multiBtn.getText().equals("    Insert Route") || multiBtn.getText().equals("    Edit Route")) {
+        if (multiBtn.getText().equals("    Insert Route")) {
             graphicsOverlay.getGraphics().clear();
             routeStops.clear();
 
@@ -244,8 +246,9 @@ public class UserView {
             });
         }
         else if (multiBtn.getText().equals("    Submit Route")) {
-            multiBtn.setText("    Edit Route");
-            btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
+            multiBtn.setVisible(false);
+            btnImage.setVisible(false);
+            multiBtn.setDisable(true);
             routeParameters.setStops(routeStops);
             ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
             routeResultFuture.addDoneListener(() -> {

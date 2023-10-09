@@ -32,7 +32,7 @@ public class TileView {
     AnchorPane tilePane;
 
     @FXML
-    MFXButton addBtn;
+    public MFXButton addBtn;
 
     @FXML
     Label timeLabel;
@@ -45,13 +45,8 @@ public class TileView {
 
     Routes routes;
 
-    @FXML
-    private void addAction() {
-        HelloApplication.priorityStatic.dequeue();
-    }
-
     public void setTile(Routes routes, double time, boolean add) {
-        if (add) {
+        if (!add) {
             addBtn.setVisible(false);
             addBtn.setDisable(true);
         }

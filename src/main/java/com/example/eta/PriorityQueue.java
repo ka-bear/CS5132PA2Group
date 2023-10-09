@@ -1,8 +1,8 @@
 package com.example.eta;
 
 public class PriorityQueue<T, S extends Comparable<S>> {
-    private Pair<T, S>[] tree;
-    private int count;
+    public Pair<T, S>[] tree;
+    public int count;
 
     @SuppressWarnings("unchecked")
     public PriorityQueue(int initialCapacity) {
@@ -48,12 +48,10 @@ public class PriorityQueue<T, S extends Comparable<S>> {
         int node = 0, left = 1, right = 2, next;
         if (tree[left] == null && tree[right] == null)
             next = count;
-        else if (tree[right] == null)
+        else if (tree[right] == null) {
             next = left;
-        else if (left >= count) {
-            return;
         }
-        if (right >= count || tree[left].compareTo(tree[right]) >= 0) {
+        else if (tree[left].compareTo(tree[right]) >= 0) {
             next = left;
         } else {
             next = right;
@@ -64,10 +62,12 @@ public class PriorityQueue<T, S extends Comparable<S>> {
             node = next;
             left = 2 * node + 1;
             right = 2 * node + 2;
-            if (left >= count) {
-                break;
+            if ((tree[left] == null ) && (tree[right] == null)) {
+                next = count;
+            } else if (tree[right] == null) {
+                next = left;
             }
-            if (right >= count || tree[left].compareTo(tree[right]) >= 0) {
+            else if (tree[left].compareTo(tree[right]) >= 0) {
                 next = left;
             } else {
                 next = right;

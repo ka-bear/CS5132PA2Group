@@ -70,10 +70,6 @@ public class DialogController {
                 routeParameters = routeParametersFuture.get();
                 routeParameters.setReturnDirections(true);
 
-                //double x1 = 1.1549406634272652E7;
-                //double y1 =148435.8325889503;
-                //double x2 = 1.1553475735468395E7;
-                //double y2 = 142532.77029089793;
                 double x1 = UserView.start.getX();
                 double y1 = UserView.start.getY();
                 double x2 = newRoute.getFromLocation()[0];
@@ -104,14 +100,7 @@ public class DialogController {
                         List<Route> routes = result.getRoutes();
                         if (!routes.isEmpty()) {
                             Route route = routes.get(0);
-                            Geometry shape = route.getRouteGeometry();
                             double t = route.getTravelTime();
-                            //routeGraphic = new Graphic(shape, new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 2));
-                            //graphicsOverlay.getGraphics().add(routeGraphic);
-
-                            Writer output = new BufferedWriter(new FileWriter("routes.csv", true));
-                            output.append(newRoute.getItem() + "," + newRoute.getCharity() + "," + x2 + "," + y2 + "," + x3 + "," + y3 + "," + t + "\n");
-                            output.close();
 
                             HelloApplication.priorityStatic.enqueue(newRoute, t);
 
