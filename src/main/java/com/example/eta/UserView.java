@@ -246,7 +246,8 @@ public class UserView {
             });
         }
         else if (multiBtn.getText().equals("    Submit Route")) {
-
+            multiBtn.setText("    Edit Route");
+            btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
             routeParameters.setStops(routeStops);
             ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
             routeResultFuture.addDoneListener(() -> {
