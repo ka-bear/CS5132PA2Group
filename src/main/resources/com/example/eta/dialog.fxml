@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+
+<AnchorPane prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: #222;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eta.DialogController">
+   <children>
+      <MFXTextField fx:id="charityTF" floatingText="Charity" layoutX="22.0" layoutY="53.0" prefHeight="49.0" prefWidth="264.0" style="-fx-border-color: #CBC3E3;">
+         <textFill>
+            <Color red="1.0" green="1.0" blue="1.0" opacity="0.8700000047683716" />
+         </textFill>
+      </MFXTextField>
+      <MFXTextField fx:id="itemTF" floatingText="Item" layoutX="22.0" layoutY="126.0" prefHeight="49.0" prefWidth="264.0" style="-fx-border-color: #CBC3E3;">
+         <textFill>
+            <Color red="1.0" green="1.0" blue="1.0" opacity="0.8700000047683716" />
+         </textFill>
+      </MFXTextField>
+      <MFXButton fx:id="submitBtn" layoutX="22.0" layoutY="221.0" prefHeight="41.0" prefWidth="126.0" text="Submit" />
+      <MFXButton fx:id="cancelBtn" layoutX="160.0" layoutY="221.0" prefHeight="41.0" prefWidth="126.0" text="Cancel" />
+   </children>
+</AnchorPane>

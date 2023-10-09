@@ -14,6 +14,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.getIcons().add(new Image("file:src/main/resources/com/example/eta/logo.png"));
+
         stage.setTitle("ETA");
         stage.setScene(scene);
         stage.show();
