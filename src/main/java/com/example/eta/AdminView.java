@@ -22,8 +22,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,7 +36,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -81,7 +86,7 @@ public class AdminView {
         mapPane.getChildren().add(mapView);
     }
 
-    public void addAction(ActionEvent actionEvent) {
+    public void addAction(ActionEvent actionEvent) throws IOException {
         if (addBtn.getText().equals("    Add Dropoff")) {
             addBtn.setText("    Submit Dropoff");
             addBtn.setDisable(true);
@@ -129,33 +134,44 @@ public class AdminView {
                 }
             });
         } else if (addBtn.getText().equals("    Submit Dropoff")) {
-            Dialog<Results> dialog = new Dialog<>();
-            dialog.setTitle("");
-            dialog.setHeaderText("Specify details");
-            DialogPane dialogPane = dialog.getDialogPane();
-            dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-            //dialogPane.setGraphic(new ImageView(new Image("file:src/main/resources/com/example/eta/logo.png")));
+//            Dialog<Results> dialog = new Dialog<>();
+//            dialog.setTitle("");
+//            dialog.setHeaderText("Specify details");
+//            DialogPane dialogPane = dialog.getDialogPane();
+//            dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+//            //dialogPane.setGraphic(new ImageView(new Image("file:src/main/resources/com/example/eta/logo.png")));
+//
+//
+//            MFXTextField tf1 = new MFXTextField("");
+//            tf1.setPromptText("Item");
+//            MFXTextField tf2 = new MFXTextField("");
+//            tf2.setPromptText("Charity");
+//            dialogPane.setContent(new VBox(8, tf1, tf2));
+//            dialog.setResultConverter((ButtonType button) -> {
+//                if (button == ButtonType.OK) {
+//                    return new Results(tf1.getText(), tf2.getText());
+//                }
+//                return null;
+//            });
+//            Optional<Results> optionalResult = dialog.showAndWait();
+//            optionalResult.ifPresent((Results results) -> {
+//                System.out.println(results.item + " " + results.charity);
+//
+//            });
+//
+//            Platform.runLater(() -> routeStops.clear());
+//            graphicsOverlay.getGraphics().clear();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(HelloApplication.class.getResource("dialog.fxml"));
 
-
-            MFXTextField tf1 = new MFXTextField("");
-            tf1.setPromptText("Item");
-            MFXTextField tf2 = new MFXTextField("");
-            tf2.setPromptText("Charity");
-            dialogPane.setContent(new VBox(8, tf1, tf2));
-            dialog.setResultConverter((ButtonType button) -> {
-                if (button == ButtonType.OK) {
-                    return new Results(tf1.getText(), tf2.getText());
-                }
-                return null;
-            });
-            Optional<Results> optionalResult = dialog.showAndWait();
-            optionalResult.ifPresent((Results results) -> {
-                System.out.println(results.item + " " + results.charity);
-
-            });
-
-            //Platform.runLater(() -> routeStops.clear());
-            graphicsOverlay.getGraphics().clear();
+            AnchorPane anchorPane = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(anchorPane));
+            stage.setTitle("Add");
+            stage.setResizable(false);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(mapView.getScene().getWindow());
+            stage.show();
 
         }
     }
