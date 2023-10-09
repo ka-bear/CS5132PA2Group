@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.List;
 import java.util.Scanner;
 
 public class HelloApplication extends Application {
@@ -44,9 +43,13 @@ public class HelloApplication extends Application {
 
     @Override
     public void stop() throws IOException {
-        Writer output = new BufferedWriter(new FileWriter("routes.csv", false));
-        for (PriorityQueue<Routes, Double>.Pair<Routes, Double> pair : priorityStatic.tree) {
-            if (pair != null) output.append(pair.item.getItem() + "," + pair.item.getCharity() + "," + String.valueOf(pair.item.getToLocation()[0]) + "," + String.valueOf(pair.item.getToLocation()[1]) + "," + String.valueOf(pair.item.getFromLocation()[0]) + "," + String.valueOf(pair.item.getFromLocation()[1]) + "," + pair.priority + "\n");
+        Writer output = new BufferedWriter(new FileWriter("routes.csv"));
+        output.write("");
+        output.close();
+        output = new BufferedWriter(new FileWriter("routes.csv",true));
+        for (int i = 0; i < priorityStatic.count; i++) {
+            PriorityQueue<Routes, Double>.Pair<Routes, Double> pair = priorityStatic.tree[i];
+            output.append(pair.item.getItem() + "," + pair.item.getCharity() + "," + String.valueOf(pair.item.getToLocation()[0]) + "," + String.valueOf(pair.item.getToLocation()[1]) + "," + String.valueOf(pair.item.getFromLocation()[0]) + "," + String.valueOf(pair.item.getFromLocation()[1]) + "," + pair.priority + "\n");
         }
 
         output.close();

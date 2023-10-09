@@ -89,13 +89,11 @@ public class AdminView {
             routeStopsStatic.addListener((ListChangeListener<Stop>) e -> {
                 // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
                 int routeStopsSize = routeStopsStatic.size();
-                System.out.println(routeStopsSize);
                 // handle user interaction
                 Color markerColor = Color.BLUE;
                 if (routeStopsSize == initialSize + 0) {
                     return;
                 } else if (routeStopsSize == initialSize + 1) {
-                    System.out.println("one");
                     graphicsOverlayStatic.getGraphics().clear();
                     markerColor = Color.RED;
                     instructionText.setText("Select Dropoff point");
@@ -115,7 +113,6 @@ public class AdminView {
 
                 if (routeStopsSize == initialSize + 2) {
                     // find the ROUTE
-                    System.out.println("two");
                     // remove the mouse clicked event if two stops have been added
                     instructionText.setText("");
                     mapView.setOnMouseClicked(null);

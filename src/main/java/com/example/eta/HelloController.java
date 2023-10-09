@@ -34,9 +34,14 @@ public class HelloController {
 
     public final static String csvName = "routes.csv";
 
+    UserView cont;
+
     public void initialize() throws IOException {
         adminPane = FXMLLoader.load(getClass().getResource("admin-view.fxml"));
-        userPane = FXMLLoader.load(getClass().getResource("user-view.fxml"));
+        FXMLLoader loader =  new FXMLLoader(getClass().getResource("user-view.fxml"));
+        userPane = loader.load();
+        cont =  loader.getController();
+
         centerStackPane.getChildren().addAll(adminPane, userPane);
         adminPane.setVisible(false);
         userBtn.setDisable(true);
@@ -65,6 +70,7 @@ public class HelloController {
                 "    -fx-opacity: 1.0;"
         );
         adminBtn.setStyle("");
+        cont.setProducts();
     }
 
     @FXML
