@@ -102,7 +102,7 @@ public class UserView {
         graphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(graphicsOverlay);
 
-        File f = new File("dailyPath.txt");
+        File f = new File( System.getProperty("user.dir") +"dailyPath.txt");
 
         routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
         ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
@@ -169,7 +169,7 @@ public class UserView {
         for (int i = 0; i < HelloApplication.priorityStatic.count; i++) {
             try{
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(HelloApplication.class.getResource("tile.fxml"));
+                fxmlLoader.setLocation(HelloApplication.class.getResource( System.getProperty("user.dir") +"tile.fxml"));
 
                 AnchorPane anchorPane = fxmlLoader.load();
                 TileView tileController = fxmlLoader.getController();
@@ -261,7 +261,7 @@ public class UserView {
                         Double x1 = p1.getX(), y1 = p1.getY();
                         Double x2 = p2.getX(), y2 = p2.getY();
 
-                        Path file = Paths.get("dailyPath.txt");
+                        Path file = Paths.get( System.getProperty("user.dir") +"dailyPath.txt");
                         List<String> lines = List.of(x1 + " " + y1 + " " + x2 + " " + y2 + " " + t);
                         Files.write(file, lines, StandardCharsets.UTF_8);
 

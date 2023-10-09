@@ -32,13 +32,13 @@ public class HelloController {
     @FXML
     private MFXButton adminBtn;
 
-    public final static String csvName = "routes.csv";
+    public final static String csvName =  System.getProperty("user.dir") +"routes.csv";
 
     UserView cont;
 
     public void initialize() throws IOException {
-        adminPane = FXMLLoader.load(getClass().getResource("admin-view.fxml"));
-        FXMLLoader loader =  new FXMLLoader(getClass().getResource("user-view.fxml"));
+        adminPane = FXMLLoader.load(getClass().getResource( System.getProperty("user.dir") +"admin-view.fxml"));
+        FXMLLoader loader =  new FXMLLoader(getClass().getResource( System.getProperty("user.dir") +"user-view.fxml"));
         userPane = loader.load();
         cont =  loader.getController();
 
