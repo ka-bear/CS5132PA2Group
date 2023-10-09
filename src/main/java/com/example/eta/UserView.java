@@ -164,6 +164,7 @@ public class UserView {
     }
 
     public void setProducts() {
+        gridPane.getChildren().clear();
         int row = 0;
         for (int i = 0; i < HelloApplication.priorityStatic.count; i++) {
             try{
@@ -174,6 +175,7 @@ public class UserView {
                 TileView tileController = fxmlLoader.getController();
                 tileController.addBtn.setOnAction(e -> {
                     HelloApplication.priorityStatic.dequeue();
+                    System.out.println(Arrays.toString(HelloApplication.priorityStatic.tree));
                     setProducts();
                 });
                 if (i == 0) {
