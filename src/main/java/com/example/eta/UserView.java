@@ -72,11 +72,10 @@ public class UserView {
     MapView mapView;
     private Graphic routeGraphic;
     private RouteTask routeTask;
-    private RouteParameters routeParameters;
+    public static RouteParameters routeParameters;
     public static ObservableList<Stop> routeStops = FXCollections.observableArrayList();
-    private final ListView<String> directionsList = new ListView<>();
 
-    private GraphicsOverlay graphicsOverlay;
+    public static GraphicsOverlay graphicsOverlay;
     public void initialize() throws IOException {
         ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU");
         var openStreetMapLayer = new OpenStreetMapLayer();
@@ -99,10 +98,6 @@ public class UserView {
         // set a viewpoint on the map view
         mapView.setViewpointGeometryAsync(new Envelope(11531238.957102917, 133131.3018712258, 11580870.529434115, 166663.23881347742, SpatialReference.create(102100)));
 
-        directionsList.setMaxSize(400, 250);
-        mapPane.getChildren().add(directionsList);
-        StackPane.setAlignment(directionsList, Pos.TOP_LEFT);
-
         graphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(graphicsOverlay);
 
@@ -118,7 +113,6 @@ public class UserView {
         routeParametersFuture.addDoneListener(() -> {
             try {
                 routeParameters = routeParametersFuture.get();
-                routeParameters.setReturnDirections(true);
                 if (f.exists()) {
                     multiBtn.setText("    Edit Route");
                     btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
