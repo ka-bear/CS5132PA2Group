@@ -82,74 +82,82 @@ public class AdminView {
     }
 
     public void addAction(ActionEvent actionEvent) {
-        addBtn.setText("    Submit Dropoff");
-        addBtn.setDisable(true);
-        addStopsOnMouseClicked();
-        instructionText.setText("Select Pickup point");
+        if (addBtn.getText().equals("    Add Dropoff")) {
+            addBtn.setText("    Submit Dropoff");
+            addBtn.setDisable(true);
+            addStopsOnMouseClicked();
+            instructionText.setText("Select Pickup point");
+            int initialSize = routeStops.size();
 
-        routeStops.addListener((ListChangeListener<Stop>) e -> {
-            // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
-            int routeStopsSize = routeStops.size();
-            System.out.println(routeStopsSize);
-            // handle user interaction
-            Color markerColor = Color.BLUE;
-            if (routeStopsSize == 0) {
-                return;
-            } else if (routeStopsSize == 1) {
-                System.out.println("one");
-                graphicsOverlay.getGraphics().clear();
-                markerColor = Color.RED;
-                instructionText.setText("Select Dropoff point");
-                //if (!directionsList.getItems().isEmpty())
-                //    directionsList.getItems().clear();
-                //directionsList.getItems().add("Click to add two points to the map to find a route.");
-            } else if (routeStopsSize == 2) {
-                markerColor = Color.GREEN;
-                instructionText.setText("");
-            }
-            // create a blue circle symbol for the stop
-            SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, markerColor, 20);
-            // get the stop's geometry
-            Geometry routeStopGeometry = routeStops.get(routeStopsSize-1).getGeometry();
+            routeStops.addListener((ListChangeListener<Stop>) e -> {
+                // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
+                int routeStopsSize = routeStops.size();
+                System.out.println(routeStopsSize);
+                // handle user interaction
+                Color markerColor = Color.BLUE;
+                if (routeStopsSize == initialSize + 0) {
+                    return;
+                } else if (routeStopsSize == initialSize + 1) {
+                    System.out.println("one");
+                    graphicsOverlay.getGraphics().clear();
+                    markerColor = Color.RED;
+                    instructionText.setText("Select Dropoff point");
+                    //if (!directionsList.getItems().isEmpty())
+                    //    directionsList.getItems().clear();
+                    //directionsList.getItems().add("Click to add two points to the map to find a route.");
+                } else if (routeStopsSize == initialSize + 2) {
+                    markerColor = Color.GREEN;
+                    instructionText.setText("");
+                }
+                // create a blue circle symbol for the stop
+                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, markerColor, 20);
+                // get the stop's geometry
+                Geometry routeStopGeometry = routeStops.get(routeStopsSize - 1).getGeometry();
 
-            graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
+                graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
 
-            if (routeStopsSize == 2) {
-                // find the ROUTE
-                System.out.println("two");
-                // remove the mouse clicked event if two stops have been added
-                instructionText.setText("");
-                mapView.setOnMouseClicked(null);
-                addBtn.setDisable(false);
-
-                Dialog<Results> dialog = new Dialog<>();
-                dialog.setTitle("");
-                dialog.setHeaderText("Specify details");
-                DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-                //dialogPane.setGraphic(new ImageView(new Image("file:src/main/resources/com/example/eta/logo.png")));
+                if (routeStopsSize == initialSize + 2) {
+                    // find the ROUTE
+                    System.out.println("two");
+                    // remove the mouse clicked event if two stops have been added
+                    instructionText.setText("");
+                    mapView.setOnMouseClicked(null);
+                    addBtn.setDisable(false);
 
 
-                MFXTextField tf1 = new MFXTextField("");
-                tf1.setPromptText("Item");
-                MFXTextField tf2 = new MFXTextField("");
-                tf2.setPromptText("Charity");
-                dialogPane.setContent(new VBox(8, tf1, tf2));
-                dialog.setResultConverter((ButtonType button) -> {
-                    if (button == ButtonType.OK) {
-                        return new Results(tf1.getText(), tf2.getText());
-                    }
-                    return null;
-                });
-                Optional<Results> optionalResult = dialog.showAndWait();
-                optionalResult.ifPresent((Results results) -> {
-                    System.out.println(results.item + " " + results.charity);
-                });
 
-                Platform.runLater(() -> routeStops.clear());
-                graphicsOverlay.getGraphics().clear();
-            }
-        });
+                }
+            });
+        } else if (addBtn.getText().equals("    Submit Dropoff")) {
+            Dialog<Results> dialog = new Dialog<>();
+            dialog.setTitle("");
+            dialog.setHeaderText("Specify details");
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+            //dialogPane.setGraphic(new ImageView(new Image("file:src/main/resources/com/example/eta/logo.png")));
+
+
+            MFXTextField tf1 = new MFXTextField("");
+            tf1.setPromptText("Item");
+            MFXTextField tf2 = new MFXTextField("");
+            tf2.setPromptText("Charity");
+            dialogPane.setContent(new VBox(8, tf1, tf2));
+            dialog.setResultConverter((ButtonType button) -> {
+                if (button == ButtonType.OK) {
+                    return new Results(tf1.getText(), tf2.getText());
+                }
+                return null;
+            });
+            Optional<Results> optionalResult = dialog.showAndWait();
+            optionalResult.ifPresent((Results results) -> {
+                System.out.println(results.item + " " + results.charity);
+
+            });
+
+            //Platform.runLater(() -> routeStops.clear());
+            graphicsOverlay.getGraphics().clear();
+
+        }
     }
 
     private void addStopsOnMouseClicked() {
