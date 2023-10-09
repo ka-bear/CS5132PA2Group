@@ -75,6 +75,8 @@ public class UserView {
     public static RouteParameters routeParameters;
     public static ObservableList<Stop> routeStops = FXCollections.observableArrayList();
 
+    public static Point start;
+    public static Point end;
     public static GraphicsOverlay graphicsOverlay;
     public void initialize() throws IOException {
         ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU");
@@ -123,11 +125,13 @@ public class UserView {
                     double y1 = scanline.nextDouble();
                     double x2 = scanline.nextDouble();
                     double y2 = scanline.nextDouble();
-                    routeStops.add(new Stop(new Point(x1,y1,SpatialReference.create(102100))));
+                    start = new Point(x1,y1,SpatialReference.create(102100));
+                    end = new Point(x2,y2,SpatialReference.create(102100));
+                    routeStops.add(new Stop(start));
                     SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.BLUE, 20);
                     Geometry routeStopGeometry = routeStops.get(0).getGeometry();
                     graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
-                    routeStops.add(new Stop(new Point(x2,y2,SpatialReference.create(102100))));
+                    routeStops.add(new Stop(end));
                     stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.GREEN, 20);
                     routeStopGeometry = routeStops.get(1).getGeometry();
                     graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
