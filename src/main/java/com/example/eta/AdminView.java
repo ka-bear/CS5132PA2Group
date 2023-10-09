@@ -147,6 +147,7 @@ public class AdminView {
                 });
 
                 Platform.runLater(() -> routeStops.clear());
+                graphicsOverlay.getGraphics().clear();
             }
         });
     }
