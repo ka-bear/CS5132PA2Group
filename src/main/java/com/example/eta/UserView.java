@@ -114,8 +114,9 @@ public class UserView {
             try {
                 routeParameters = routeParametersFuture.get();
                 if (f.exists()) {
-                    multiBtn.setText("    Edit Route");
-                    btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
+                    multiBtn.setVisible(false);
+                    btnImage.setVisible(false);
+                    multiBtn.setDisable(true);
                     Scanner scan = new Scanner(f);
                     Scanner scanline = new Scanner(scan.nextLine());
                     double x1 = scanline.nextDouble();
@@ -196,7 +197,7 @@ public class UserView {
 
     @FXML
     private void multiAction() {
-        if (multiBtn.getText().equals("    Insert Route") || multiBtn.getText().equals("    Edit Route")) {
+        if (multiBtn.getText().equals("    Insert Route")) {
             graphicsOverlay.getGraphics().clear();
             routeStops.clear();
 
@@ -240,8 +241,9 @@ public class UserView {
             });
         }
         else if (multiBtn.getText().equals("    Submit Route")) {
-            multiBtn.setText("    Edit Route");
-            btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
+            multiBtn.setVisible(false);
+            btnImage.setVisible(false);
+            multiBtn.setDisable(true);
             routeParameters.setStops(routeStops);
             ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
             routeResultFuture.addDoneListener(() -> {
