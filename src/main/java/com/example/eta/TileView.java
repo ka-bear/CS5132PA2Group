@@ -52,7 +52,7 @@ public class TileView {
         }
         itemName.setText(routes.getItem());
         charityID.setText(routes.getCharity());
-        timeLabel.setText(String.valueOf(time));
+        timeLabel.setText(String.valueOf(-time));
         this.routes = routes;
     }
 
@@ -80,7 +80,6 @@ public class TileView {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    System.out.println("Thread Error");
                 }
                 Platform.runLater(new Runnable() {
                     @Override
@@ -111,7 +110,11 @@ public class TileView {
                     UserView.routeStops.add(1, new Stop(new Point(routes.getToLocation()[0],routes.getToLocation()[1],SpatialReference.create(102100))));
                     UserView.routeStops.add(2, new Stop(new Point(routes.getFromLocation()[0],routes.getFromLocation()[1],SpatialReference.create(102100))));
                 }
-                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.BLUE, 20);
+                for (int i = 0; i < 4; i++) {
+                    SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.GREEN, 20);
+                    Geometry routeStopGeometry = UserView.routeStops.get(i).getGeometry();
+                    UserView.graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
+                }
                 UserView.routeParameters.setStops(UserView.routeStops);
                 ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(UserView.routeParameters);
                 routeResultFuture.addDoneListener(() -> {

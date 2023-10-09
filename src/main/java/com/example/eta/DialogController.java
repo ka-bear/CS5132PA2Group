@@ -102,7 +102,7 @@ public class DialogController {
                             Route route = routes.get(0);
                             double t = route.getTravelTime();
 
-                            HelloApplication.priorityStatic.enqueue(newRoute, t);
+                            HelloApplication.priorityStatic.enqueue(newRoute, -t);
 
                             Stage stage = (Stage) cancelBtn.getScene().getWindow();
                             AdminView.graphicsOverlayStatic.getGraphics().clear();

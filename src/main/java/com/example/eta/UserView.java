@@ -175,13 +175,12 @@ public class UserView {
                 TileView tileController = fxmlLoader.getController();
                 tileController.addBtn.setOnAction(e -> {
                     HelloApplication.priorityStatic.dequeue();
-                    System.out.println(Arrays.toString(HelloApplication.priorityStatic.tree));
                     setProducts();
                 });
                 if (i == 0) {
-                    tileController.setTile(HelloApplication.priorityStatic.tree[0].item, HelloApplication.priorityStatic.tree[0].priority, true);
+                    tileController.setTile(HelloApplication.priorityStatic.tree[i].item, HelloApplication.priorityStatic.tree[i].priority, true);
                 } else {
-                    tileController.setTile(HelloApplication.priorityStatic.tree[0].item, HelloApplication.priorityStatic.tree[0].priority, false);
+                    tileController.setTile(HelloApplication.priorityStatic.tree[i].item, HelloApplication.priorityStatic.tree[i].priority, false);
                 }
 
                 gridPane.add(anchorPane, 0, row++);
@@ -215,13 +214,10 @@ public class UserView {
                 // tracks the number of stops added to the map, and use it to create graphic geometry and symbol text
                 int routeStopsSize = routeStops.size();
                 // handle user interaction
-                System.out.println(routeStops);
                 Color markerColor = Color.BLUE;
                 if (routeStopsSize == 0) {
-                    System.out.println("zero");
                     return;
                 } else if (routeStopsSize == 1) {
-                    System.out.println("one");
                     graphicsOverlay.getGraphics().clear();
                     markerColor = Color.GREEN;
                     //if (!directionsList.getItems().isEmpty())
@@ -237,7 +233,6 @@ public class UserView {
 
                 if (routeStopsSize == 2) {
                     // find the ROUTE
-                    System.out.println("two");
                     // remove the mouse clicked event if two stops have been added
                     mapView.setOnMouseClicked(null);
                     multiBtn.setDisable(false);
