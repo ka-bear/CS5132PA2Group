@@ -111,8 +111,6 @@ public class UserView {
         if (f.exists()) {
             multiBtn.setText("    Edit Route");
             btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
-
-            multiBtn.setDisable(true); // Since we haven't implemented this yet
         }
 
         routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
@@ -131,7 +129,13 @@ public class UserView {
                     double x2 = scanline.nextDouble();
                     double y2 = scanline.nextDouble();
                     routeStops.add(new Stop(new Point(x1,y1,SpatialReference.create(102100))));
+                    SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.BLUE, 20);
+                    Geometry routeStopGeometry = routeStops.get(0).getGeometry();
+                    graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
                     routeStops.add(new Stop(new Point(x2,y2,SpatialReference.create(102100))));
+                    stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.GREEN, 20);
+                    routeStopGeometry = routeStops.get(1).getGeometry();
+                    graphicsOverlay.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
                     routeParameters.setStops(routeStops);
                     ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
                     routeResultFuture.addDoneListener(() -> {
@@ -198,8 +202,12 @@ public class UserView {
 
     @FXML
     private void multiAction() {
-        if (multiBtn.getText().equals("    Insert Route")) {
+        if (multiBtn.getText().equals("    Insert Route") || multiBtn.getText().equals("    Edit Route")) {
+            graphicsOverlay.getGraphics().clear();
+            routeStops.clear();
+
             multiBtn.setText("    Submit Route");
+            btnImage.setImage(new Image("file:src/main/resources/com/example/eta/done.png"));
             multiBtn.setDisable(true);
             addStopsOnMouseClicked();
 
@@ -238,6 +246,8 @@ public class UserView {
             });
         }
         else if (multiBtn.getText().equals("    Submit Route")) {
+            multiBtn.setText("    Edit Route");
+            btnImage.setImage(new Image("file:src/main/resources/com/example/eta/edit.png"));
             routeParameters.setStops(routeStops);
             ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
             routeResultFuture.addDoneListener(() -> {
@@ -254,7 +264,6 @@ public class UserView {
                         Point p2 = routeStops.get(1).getGeometry();
                         Double x1 = p1.getX(), y1 = p1.getY();
                         Double x2 = p2.getX(), y2 = p2.getY();
-                        System.out.println(routeStops.get(1).getGeometry());
 
                         Path file = Paths.get("dailyPath.txt");
                         List<String> lines = List.of(x1 + " " + y1 + " " + x2 + " " + y2 + " " + t);
@@ -267,10 +276,6 @@ public class UserView {
                 }
             });
         }
-        else if (multiBtn.getText().equals("    Edit Route")) {
-            // TODO
-        }
-
     }
 
 

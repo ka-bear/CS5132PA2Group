@@ -12,15 +12,18 @@
     -fx-background-color: #292929;
 }
 
-
-
 .text-field {
-    -fx-background-color: #292929;
+    -fx-background-color: #000;
     -fx-text-fill: #fff;
 }
 
+.mfx-text-field .floating-text {
+    -fx-font-family: "Open Sans Regular";
+    -fx-text-fill: #CBC3E3;
+}
+
 .text-area {
-    -fx-background-color: #292929;
+    -fx-background-color: #000;
     -fx-text-fill: #fff;
 }
 

@@ -31,7 +31,6 @@ public class HelloController {
     @FXML
     private MFXButton adminBtn;
 
-
     public void initialize() throws IOException {
         adminPane = FXMLLoader.load(getClass().getResource("admin-view.fxml"));
         userPane = FXMLLoader.load(getClass().getResource("user-view.fxml"));

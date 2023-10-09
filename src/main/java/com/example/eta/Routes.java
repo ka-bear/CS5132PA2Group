@@ -3,14 +3,29 @@ package com.example.eta;
 public class Routes {
     private String item;
     private String charity;
-    private int time;
-    private int[] toLocation;
-    private int[] fromLocation;
+    private double[] toLocation;
 
-    public Routes(String item, String charity, int time, int[] toLocation, int[] fromLocation) {
+    public String getItem() {
+        return item;
+    }
+
+    public String getCharity() {
+        return charity;
+    }
+
+    public double[] getToLocation() {
+        return toLocation;
+    }
+
+    public double[] getFromLocation() {
+        return fromLocation;
+    }
+
+    private double[] fromLocation;
+
+    public Routes(String item, String charity, double[] toLocation, double[] fromLocation) {
         this.item = item;
         this.charity = charity;
-        this.time = time;
         if (toLocation.length == 2) {
             this.toLocation = toLocation;
         }
