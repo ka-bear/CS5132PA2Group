@@ -11,7 +11,7 @@ public class PriorityQueue<T, S extends Comparable<S>> {
     }
 
     public void enqueue(T item, S priority) {
-        if (count == tree.length) {
+        if (count >= tree.length) {
             expandCapacity();
         }
         tree[count] = new Pair<>(item, priority);
@@ -46,6 +46,7 @@ public class PriorityQueue<T, S extends Comparable<S>> {
     private void shiftDown() {
         Pair<T, S> temp;
         int node = 0, left = 1, right = 2, next;
+        if (right >= tree.length ) expandCapacity();
         if (tree[left] == null && tree[right] == null)
             next = count;
         else if (tree[right] == null) {
@@ -62,6 +63,7 @@ public class PriorityQueue<T, S extends Comparable<S>> {
             node = next;
             left = 2 * node + 1;
             right = 2 * node + 2;
+            if (right >= tree.length ) expandCapacity();
             if ((tree[left] == null ) && (tree[right] == null)) {
                 next = count;
             } else if (tree[right] == null) {
