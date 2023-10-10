@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.application.Platform;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -52,7 +53,9 @@ public class TileView {
         }
         itemName.setText(routes.getItem());
         charityID.setText(routes.getCharity());
-        timeLabel.setText(String.valueOf(-time));
+        DecimalFormat df = new DecimalFormat("#.0");
+
+        timeLabel.setText(String.valueOf(df.format(-time)));
         this.routes = routes;
     }
 
