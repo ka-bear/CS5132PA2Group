@@ -22,8 +22,8 @@ public final class Toast
         toastStage.initStyle(StageStyle.TRANSPARENT);
 
         Text text = new Text(toastMsg);
-        text.setFont(Font.font("Verdana", 40));
-        text.setFill(Color.RED);
+        text.setFont(Font.font("Segoe UI", 40));
+        text.setFill(Color.WHITE);
 
         StackPane root = new StackPane(text);
         root.setStyle("-fx-background-radius: 20; -fx-background-color: rgba(0, 0, 0, 0.2); -fx-padding: 50px;");
