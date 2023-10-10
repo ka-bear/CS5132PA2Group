@@ -108,6 +108,7 @@ public class DialogController {
                             AdminView.graphicsOverlayStatic.getGraphics().clear();
                             AdminView.routeStopsStatic.clear();
                             stage.close();
+                            routeStops.clear();
                         }
 
 

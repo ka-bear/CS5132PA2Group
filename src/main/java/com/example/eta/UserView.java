@@ -67,6 +67,9 @@ public class UserView {
     private MFXButton multiBtn;
 
     @FXML
+    private MFXButton doneBtn;
+
+    @FXML
     private GridPane gridPane;
     MapView mapView;
     private Graphic routeGraphic;
@@ -102,7 +105,14 @@ public class UserView {
         graphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(graphicsOverlay);
 
-        File f = new File( System.getProperty("user.dir") +"dailyPath.txt");
+        File f = new File("dailyPath.txt");
+
+        if (f.exists()) {
+            multiBtn.setText("    Insert Route");
+            multiBtn.setDisable(true);
+        }
+
+        doneBtn.setVisible(false);
 
         routeTask = new RouteTask("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
         ListenableFuture<RouteParameters> routeParametersFuture = routeTask.createDefaultParametersAsync();
@@ -110,9 +120,6 @@ public class UserView {
             try {
                 routeParameters = routeParametersFuture.get();
                 if (f.exists()) {
-                    multiBtn.setVisible(false);
-                    btnImage.setVisible(false);
-                    multiBtn.setDisable(true);
                     setProducts();
                     Scanner scan = new Scanner(f);
                     Scanner scanline = new Scanner(scan.nextLine());
@@ -169,13 +176,16 @@ public class UserView {
         for (int i = 0; i < HelloApplication.priorityStatic.count; i++) {
             try{
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(HelloApplication.class.getResource( System.getProperty("user.dir") +"tile.fxml"));
+                fxmlLoader.setLocation(HelloApplication.class.getResource("tile.fxml"));
 
                 AnchorPane anchorPane = fxmlLoader.load();
                 TileView tileController = fxmlLoader.getController();
                 tileController.addBtn.setOnAction(e -> {
                     HelloApplication.priorityStatic.dequeue();
                     setProducts();
+                    gridPane.setDisable(true);
+                    doneBtn.setVisible(true);
+
                 });
                 if (i == 0) {
                     tileController.setTile(HelloApplication.priorityStatic.tree[i].item, HelloApplication.priorityStatic.tree[i].priority, true);
@@ -241,8 +251,9 @@ public class UserView {
             });
         }
         else if (multiBtn.getText().equals("    Submit Route")) {
-            multiBtn.setVisible(false);
-            btnImage.setVisible(false);
+            //multiBtn.setVisible(false);
+            //btnImage.setVisible(false);
+            multiBtn.setText("    Insert Route");
             multiBtn.setDisable(true);
             routeParameters.setStops(routeStops);
             ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
@@ -261,7 +272,7 @@ public class UserView {
                         Double x1 = p1.getX(), y1 = p1.getY();
                         Double x2 = p2.getX(), y2 = p2.getY();
 
-                        Path file = Paths.get( System.getProperty("user.dir") +"dailyPath.txt");
+                        Path file = Paths.get("dailyPath.txt");
                         List<String> lines = List.of(x1 + " " + y1 + " " + x2 + " " + y2 + " " + t);
                         Files.write(file, lines, StandardCharsets.UTF_8);
 
@@ -272,6 +283,12 @@ public class UserView {
                 }
             });
         }
+    }
+
+    @FXML
+    private void doneAction() {
+        gridPane.setDisable(false);
+        doneBtn.setVisible(false);
     }
 
 
