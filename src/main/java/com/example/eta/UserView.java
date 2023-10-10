@@ -17,9 +17,7 @@ import com.esri.arcgisruntime.mapping.view.MapView;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import com.esri.arcgisruntime.tasks.networkanalysis.*;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
-import com.esri.arcgisruntime.tasks.networkanalysis.RouteParameters;
-import com.esri.arcgisruntime.tasks.networkanalysis.RouteTask;
-import com.esri.arcgisruntime.tasks.networkanalysis.Stop;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -51,6 +49,11 @@ import com.esri.arcgisruntime.geometry.Geometry;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
+
+import java.awt.datatransfer.StringSelection;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+
 
 public class UserView {
 
@@ -181,8 +184,23 @@ public class UserView {
                 AnchorPane anchorPane = fxmlLoader.load();
                 TileView tileController = fxmlLoader.getController();
                 tileController.addBtn.setOnAction(e -> {
-                    HelloApplication.priorityStatic.dequeue();
-                    setProducts();
+                    
+                    Routes x = HelloApplication.priorityStatic.dequeue();
+
+                    String myString = "https://www.google.com/maps/dir/1.3272,103.9465/1.3179287929,103.878604696/1.3792,103.8935/1.3573,103.9884";
+                    StringSelection stringSelection = new StringSelection(myString);
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clipboard.setContents(stringSelection, null);
+
+                    double x1 = UserView.start.getX();
+                    double y1 = UserView.start.getY();
+                    double x2 = x.getFromLocation()[0];
+                    double y2 = x.getFromLocation()[1];
+                    double x3 = x.getToLocation()[0];
+                    double y3 = x.getToLocation()[1];
+                    double x4 = UserView.end.getX();
+                    double y4 = UserView.end.getY();                   
+                    setProducts(); 
                     gridPane.setDisable(true);
                     doneBtn.setVisible(true);
 
