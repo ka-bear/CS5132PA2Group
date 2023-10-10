@@ -60,15 +60,23 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
+        <version>2.3</version>
         <executions>
           <execution>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
+            <configuration>
+              <transformers>
+                <transformer>
+                  <mainClass>com.example.eta.FakeMain</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
+        <configuration />
       </plugin>
     </plugins>
   </build>
@@ -121,3 +129,4 @@
     <junit.version>5.9.2</junit.version>
   </properties>
 </project>
+
