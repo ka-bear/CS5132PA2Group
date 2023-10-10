@@ -207,7 +207,7 @@ public class UserView {
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(stringSelection, null);
 
-                    String toastMsg = "Google Maps link copied";
+                    String toastMsg = "Google Maps link copied to clipboard";
                     int toastMsgTime = 3500; //3.5 seconds
                     int fadeInTime = 500; //0.5 seconds
                     int fadeOutTime= 500; //0.5 seconds
