@@ -88,14 +88,11 @@ public class DialogController {
                 routeStops.add(new Stop(four));
 
 
-
-
-
-
                 routeParameters.setStops(routeStops);
                 ListenableFuture<RouteResult> routeResultFuture = routeTask.solveRouteAsync(routeParameters);
                 routeResultFuture.addDoneListener(() -> {
                     try {
+                        
                         RouteResult result = routeResultFuture.get();
                         List<Route> routes = result.getRoutes();
                         if (!routes.isEmpty()) {
