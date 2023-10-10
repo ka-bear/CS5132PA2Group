@@ -55,7 +55,7 @@ public class TileView {
         charityID.setText(routes.getCharity());
         DecimalFormat df = new DecimalFormat("#.0");
 
-        timeLabel.setText(String.valueOf(df.format(-time)));
+        timeLabel.setText(String.valueOf(df.format(-time)) + "min");
         this.routes = routes;
     }
 
