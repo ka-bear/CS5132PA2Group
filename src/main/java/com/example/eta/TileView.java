@@ -106,7 +106,7 @@ public class TileView {
                     UserView.routeStops.add(2, new Stop(new Point(routes.getFromLocation()[0],routes.getFromLocation()[1],SpatialReference.create(102100))));
                 } else {
                     UserView.routeStops.remove(1);
-                    UserView.routeStops.remove(2);
+                    UserView.routeStops.remove(1);
                     UserView.routeStops.add(1, new Stop(new Point(routes.getToLocation()[0],routes.getToLocation()[1],SpatialReference.create(102100))));
                     UserView.routeStops.add(2, new Stop(new Point(routes.getFromLocation()[0],routes.getFromLocation()[1],SpatialReference.create(102100))));
                 }
