@@ -43,10 +43,10 @@ public class MainApplication extends Application {
 
     @Override
     public void stop() throws IOException {
-        Writer output = new BufferedWriter(new FileWriter("routes.csv"));
+        Writer output = new BufferedWriter(new FileWriter( System.getProperty("user.dir") +"routes.csv"));
         output.write("");
         output.close();
-        output = new BufferedWriter(new FileWriter("routes.csv",true));
+        output = new BufferedWriter(new FileWriter( System.getProperty("user.dir") +"routes.csv",true));
         for (int i = 0; i < priorityStatic.count; i++) {
             PriorityQueue<Routes, Double>.Pair<Routes, Double> pair = priorityStatic.tree[i];
             output.append(pair.item.getItem() + "," + pair.item.getCharity() + "," + String.valueOf(pair.item.getToLocation()[0]) + "," + String.valueOf(pair.item.getToLocation()[1]) + "," + String.valueOf(pair.item.getFromLocation()[0]) + "," + String.valueOf(pair.item.getFromLocation()[1]) + "," + pair.priority + "\n");

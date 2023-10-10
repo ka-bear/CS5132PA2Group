@@ -26,7 +26,7 @@ public class MainController {
     @FXML
     private MFXButton adminBtn;
 
-    public final static String csvName = "routes.csv";
+    public final static String csvName =  System.getProperty("user.dir") + "routes.csv";
 
     UserView cont;
 

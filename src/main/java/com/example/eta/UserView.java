@@ -100,7 +100,7 @@ public class UserView {
         graphicsOverlay = new GraphicsOverlay();
         mapView.getGraphicsOverlays().add(graphicsOverlay);
 
-        File f = new File("dailyPath.txt");
+        File f = new File( System.getProperty("user.dir") +"dailyPath.txt");
 
         if (f.exists()) {
             multiBtn.setText("    Insert Route");
@@ -296,7 +296,7 @@ public class UserView {
                         Double x1 = p1.getX(), y1 = p1.getY();
                         Double x2 = p2.getX(), y2 = p2.getY();
 
-                        Path file = Paths.get("dailyPath.txt");
+                        Path file = Paths.get( System.getProperty("user.dir") +"dailyPath.txt");
                         List<String> lines = List.of(x1 + " " + y1 + " " + x2 + " " + y2 + " " + t);
                         Files.write(file, lines, StandardCharsets.UTF_8);
 
