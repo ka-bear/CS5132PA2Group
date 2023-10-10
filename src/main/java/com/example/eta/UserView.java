@@ -46,6 +46,7 @@ import com.esri.arcgisruntime.geometry.Geometry;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.awt.datatransfer.StringSelection;
 import java.awt.Toolkit;
@@ -205,6 +206,12 @@ public class UserView {
                     StringSelection stringSelection = new StringSelection(myString);
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(stringSelection, null);
+
+                    String toastMsg = "Google Maps link copied";
+                    int toastMsgTime = 3500; //3.5 seconds
+                    int fadeInTime = 500; //0.5 seconds
+                    int fadeOutTime= 500; //0.5 seconds
+                    Toast.makeText((Stage) userPane.getScene().getWindow(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 
 
                     setProducts();
