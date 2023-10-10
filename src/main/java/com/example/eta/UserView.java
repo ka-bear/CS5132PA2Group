@@ -2,10 +2,7 @@ package com.example.eta;
 
 import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
-import com.esri.arcgisruntime.geometry.Envelope;
-import com.esri.arcgisruntime.geometry.Point;
-import com.esri.arcgisruntime.geometry.Geometry;
-import com.esri.arcgisruntime.geometry.SpatialReference;
+import com.esri.arcgisruntime.geometry.*;
 import com.esri.arcgisruntime.layers.OpenStreetMapLayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
@@ -53,6 +50,8 @@ import javafx.scene.paint.Color;
 import java.awt.datatransfer.StringSelection;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+
+import static com.esri.arcgisruntime.geometry.CoordinateFormatter.LatitudeLongitudeFormat.DEGREES_MINUTES_SECONDS;
 
 
 public class UserView {
@@ -184,13 +183,8 @@ public class UserView {
                 AnchorPane anchorPane = fxmlLoader.load();
                 TileView tileController = fxmlLoader.getController();
                 tileController.addBtn.setOnAction(e -> {
-                    
-                    Routes x = HelloApplication.priorityStatic.dequeue();
 
-                    String myString = "https://www.google.com/maps/dir/1.3272,103.9465/1.3179287929,103.878604696/1.3792,103.8935/1.3573,103.9884";
-                    StringSelection stringSelection = new StringSelection(myString);
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clipboard.setContents(stringSelection, null);
+                    Routes x = HelloApplication.priorityStatic.dequeue();
 
                     double x1 = UserView.start.getX();
                     double y1 = UserView.start.getY();
@@ -199,8 +193,21 @@ public class UserView {
                     double x3 = x.getToLocation()[0];
                     double y3 = x.getToLocation()[1];
                     double x4 = UserView.end.getX();
-                    double y4 = UserView.end.getY();                   
-                    setProducts(); 
+                    double y4 = UserView.end.getY();
+                    Point start = new Point(x1,y1,SpatialReference.create(102100));
+                    Point two = new Point(x2,y2,SpatialReference.create(102100));
+                    Point three = new Point(x3,y3,SpatialReference.create(102100));
+                    Point end = new Point(x4,y4,SpatialReference.create(102100));
+                    CoordinateFormatter c = new CoordinateFormatter();
+
+
+                    String myString = "https://www.google.com/maps/dir/"+c.toLatitudeLongitude(start, DEGREES_MINUTES_SECONDS, 6)+"/"+c.toLatitudeLongitude(two, DEGREES_MINUTES_SECONDS, 6)+"/"+c.toLatitudeLongitude(three, DEGREES_MINUTES_SECONDS, 6)+"/"+c.toLatitudeLongitude(end, DEGREES_MINUTES_SECONDS, 6);
+                    StringSelection stringSelection = new StringSelection(myString);
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clipboard.setContents(stringSelection, null);
+
+
+                    setProducts();
                     gridPane.setDisable(true);
                     doneBtn.setVisible(true);
 
