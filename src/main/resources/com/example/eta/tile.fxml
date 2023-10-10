@@ -5,29 +5,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="tilePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#tilePaneOnClick" onMouseEntered="#mouseEnteredTile" onMouseExited="#mouseExitedTile" prefHeight="76.0" prefWidth="350.0" style="-fx-border-color: #fff; -fx-background-color: #252525;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eta.TileView">
+<AnchorPane fx:id="tilePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#tilePaneOnClick" onMouseEntered="#mouseEnteredTile" onMouseExited="#mouseExitedTile" prefHeight="86.0" prefWidth="350.0" style="-fx-border-color: #fff; -fx-background-color: #252525;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eta.TileView">
     <children>
-        <Label fx:id="itemName" layoutX="14.0" layoutY="13.0" text="ItemName" textFill="WHITE">
+        <Label fx:id="itemName" layoutX="11.0" layoutY="6.0" text="ItemName" textFill="WHITE">
             <font>
                 <Font name="Segoe UI Semilight" size="18.0" />
             </font>
         </Label>
-        <MFXButton fx:id="addBtn" layoutX="267.0" layoutY="18.0" style="-fx-border-color: #fff; -fx-background-color: #333;" text="RSVP" textFill="WHITE">
+        <MFXButton fx:id="addBtn" layoutX="267.0" layoutY="22.0" style="-fx-border-color: #fff; -fx-background-color: #333;" text="RSVP" textFill="WHITE">
             <font>
                 <Font name="Segoe UI Semilight" size="18.0" />
             </font>
         </MFXButton>
-        <Label fx:id="charityID" layoutX="14.0" layoutY="43.0" text="Charity" textFill="#909090">
+        <Label fx:id="charityID" layoutX="14.0" layoutY="32.0" text="Charity" textFill="#909090">
             <font>
                 <Font name="Segoe UI Semilight" size="14.0" />
             </font>
         </Label>
-      <Label layoutX="74.0" layoutY="39.0" prefHeight="27.0" prefWidth="43.0" text="ETA:" textFill="WHITE">
+      <Label layoutX="13.0" layoutY="55.0" prefHeight="27.0" prefWidth="43.0" text="ETA:" textFill="WHITE">
          <font>
             <Font name="Segoe UI Semilight" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="timeLabel" layoutX="117.0" layoutY="39.0" prefHeight="27.0" prefWidth="128.0" text="time" textFill="WHITE">
+      <Label fx:id="timeLabel" layoutX="55.0" layoutY="55.0" prefHeight="27.0" prefWidth="128.0" text="time" textFill="WHITE">
          <font>
             <Font name="Segoe UI Semilight" size="18.0" />
          </font>
