@@ -13,7 +13,7 @@ public class HelloApplication extends Application {
     public static PriorityQueue<Routes, Double> priorityStatic = new PriorityQueue<Routes, Double>(10);
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource( System.getProperty("user.dir") + "hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.getIcons().add(new Image("file:src/main/resources/com/example/eta/logo.png"));
         stage.setResizable(false);
@@ -43,10 +43,10 @@ public class HelloApplication extends Application {
 
     @Override
     public void stop() throws IOException {
-        Writer output = new BufferedWriter(new FileWriter( System.getProperty("user.dir") +"routes.csv"));
+        Writer output = new BufferedWriter(new FileWriter("routes.csv"));
         output.write("");
         output.close();
-        output = new BufferedWriter(new FileWriter( System.getProperty("user.dir") +"routes.csv",true));
+        output = new BufferedWriter(new FileWriter("routes.csv",true));
         for (int i = 0; i < priorityStatic.count; i++) {
             PriorityQueue<Routes, Double>.Pair<Routes, Double> pair = priorityStatic.tree[i];
             output.append(pair.item.getItem() + "," + pair.item.getCharity() + "," + String.valueOf(pair.item.getToLocation()[0]) + "," + String.valueOf(pair.item.getToLocation()[1]) + "," + String.valueOf(pair.item.getFromLocation()[0]) + "," + String.valueOf(pair.item.getFromLocation()[1]) + "," + pair.priority + "\n");
