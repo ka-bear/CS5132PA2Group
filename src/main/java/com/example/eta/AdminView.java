@@ -33,6 +33,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class AdminView {
@@ -51,6 +52,7 @@ public class AdminView {
 
 
     public void initialize() {
+        addBtn.setDisable(false);
         ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU");
         var openStreetMapLayer = new OpenStreetMapLayer();
 
@@ -76,6 +78,11 @@ public class AdminView {
         mapView.getGraphicsOverlays().add(graphicsOverlayStatic);
 
         mapPane.getChildren().add(mapView);
+
+        File f = new File(System.getProperty("user.details") + "dailyPath.txt");
+        if (!f.exists()) {
+            addBtn.setDisable(true);
+        }
     }
 
     public void addAction(ActionEvent actionEvent) throws IOException {
@@ -151,7 +158,7 @@ public class AdminView {
 //            Platform.runLater(() -> routeStops.clear());
 //            graphicsOverlay.getGraphics().clear();
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(HelloApplication.class.getResource("dialog.fxml"));
+            fxmlLoader.setLocation(MainApplication.class.getResource("dialog.fxml"));
 
             AnchorPane anchorPane = fxmlLoader.load();
             Stage stage = new Stage();

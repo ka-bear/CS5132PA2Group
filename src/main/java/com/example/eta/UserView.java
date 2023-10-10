@@ -7,7 +7,6 @@ import com.esri.arcgisruntime.layers.OpenStreetMapLayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.mapping.Basemap;
-import com.esri.arcgisruntime.mapping.Viewpoint;
 import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.MapView;
@@ -19,14 +18,10 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
-import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -39,13 +34,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import com.esri.arcgisruntime.geometry.Geometry;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.awt.datatransfer.StringSelection;
@@ -176,16 +168,16 @@ public class UserView {
     public void setProducts() {
         gridPane.getChildren().clear();
         int row = 0;
-        for (int i = 0; i < HelloApplication.priorityStatic.count; i++) {
+        for (int i = 0; i < MainApplication.priorityStatic.count; i++) {
             try{
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(HelloApplication.class.getResource("tile.fxml"));
+                fxmlLoader.setLocation(MainApplication.class.getResource("tile.fxml"));
 
                 AnchorPane anchorPane = fxmlLoader.load();
                 TileView tileController = fxmlLoader.getController();
                 tileController.addBtn.setOnAction(e -> {
 
-                    Routes x = HelloApplication.priorityStatic.dequeue();
+                    Routes x = MainApplication.priorityStatic.dequeue();
 
                     double x1 = UserView.start.getX();
                     double y1 = UserView.start.getY();
@@ -220,9 +212,9 @@ public class UserView {
 
                 });
                 if (i == 0) {
-                    tileController.setTile(HelloApplication.priorityStatic.tree[i].item, HelloApplication.priorityStatic.tree[i].priority, true);
+                    tileController.setTile(MainApplication.priorityStatic.tree[i].item, MainApplication.priorityStatic.tree[i].priority, true);
                 } else {
-                    tileController.setTile(HelloApplication.priorityStatic.tree[i].item, HelloApplication.priorityStatic.tree[i].priority, false);
+                    tileController.setTile(MainApplication.priorityStatic.tree[i].item, MainApplication.priorityStatic.tree[i].priority, false);
                 }
 
                 gridPane.add(anchorPane, 0, row++);

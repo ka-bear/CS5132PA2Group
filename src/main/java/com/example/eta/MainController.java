@@ -2,21 +2,15 @@ package com.example.eta;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
-import io.github.palexdev.mfxresources.fonts.IconsProviders;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.io.IOException;
-import io.github.palexdev.materialfx.controls.MFXRectangleToggleNode;
-import javafx.scene.paint.Color;
 
-public class HelloController {
+public class MainController {
 
     @FXML
     private StackPane centerStackPane;

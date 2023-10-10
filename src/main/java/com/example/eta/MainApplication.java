@@ -9,11 +9,11 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.Scanner;
 
-public class HelloApplication extends Application {
+public class MainApplication extends Application {
     public static PriorityQueue<Routes, Double> priorityStatic = new PriorityQueue<Routes, Double>(10);
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(  "hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(  "hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.getIcons().add(new Image("file:src/main/resources/com/example/eta/logo.png"));
         stage.setResizable(false);
@@ -21,7 +21,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        File f = new File(HelloController.csvName);
+        File f = new File(MainController.csvName);
 
         Scanner scan = new Scanner(f);
         while (scan.hasNextLine()) {

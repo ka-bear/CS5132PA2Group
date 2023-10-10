@@ -47,7 +47,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.eta/com.example.eta.HelloApplication</mainClass>
+              <mainClass>com.example.eta/com.example.eta.MainApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
