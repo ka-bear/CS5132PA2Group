@@ -39,6 +39,7 @@ import java.io.IOException;
 public class AdminView {
 
     public MFXButton addBtn;
+    public static MFXButton addBtn2;
     public ImageView btnImage;
     public StackPane mapPane;
     public ScrollPane tllePane;
@@ -52,6 +53,8 @@ public class AdminView {
 
 
     public void initialize() {
+        addBtn2 = addBtn;
+
         addBtn.setDisable(false);
         ArcGISRuntimeEnvironment.setApiKey("AAPK0e766a9bd7694608894d44be143c92a0yuacC21QXleV1poxQa9beOnsFj257IueMvpErtPz8JMlApkdRm2ML1_iCO8WEMzU");
         var openStreetMapLayer = new OpenStreetMapLayer();
@@ -79,7 +82,7 @@ public class AdminView {
 
         mapPane.getChildren().add(mapView);
 
-        File f = new File(System.getProperty("user.details") + "dailyPath.txt");
+        File f = new File("dailyPath.txt");
         if (!f.exists()) {
             addBtn.setDisable(true);
         }
@@ -112,12 +115,13 @@ public class AdminView {
                     instructionText.setText("");
                 }
                 // create a blue circle symbol for the stop
-                SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, markerColor, 20);
-                // get the stop's geometry
-                Geometry routeStopGeometry = routeStopsStatic.get(routeStopsSize - 1).getGeometry();
+                if (routeStopsSize != 0) {
+                    SimpleMarkerSymbol stopMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, markerColor, 20);
+                    // get the stop's geometry
+                    Geometry routeStopGeometry = routeStopsStatic.get(routeStopsSize - 1).getGeometry();
 
-                graphicsOverlayStatic.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
-
+                    graphicsOverlayStatic.getGraphics().add(new Graphic(routeStopGeometry, stopMarker));
+                }
                 if (routeStopsSize == initialSize + 2) {
                     // find the ROUTE
                     // remove the mouse clicked event if two stops have been added
